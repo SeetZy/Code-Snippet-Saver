@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
-  // Route for navigation
-  static const routeName = '/home';
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +18,13 @@ class Home extends StatelessWidget {
             const Center(
               child: Text("overview"),
             ),
+
+            // Button to add new snippets
             Positioned(
               right: 16,
               bottom: 16,
               child: FloatingActionButton.extended(
+                elevation: 0,
                 onPressed: () {
                   Navigator.pushNamed(context, '/add');
                 },

@@ -2,10 +2,8 @@
   * Util/dependency imports
  */
 import 'package:flutter/material.dart';
-// ? https://pub.dev/packages/bitsdojo_window/install
-import 'package:bitsdojo_window/bitsdojo_window.dart';
-// // ? https://pub.dev/packages/flutter_svg
-// import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app/utils/global.vars.dart';
+import 'package:app/utils/app.routes.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
@@ -19,47 +17,36 @@ class _SideBarState extends State<SideBar> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(minWidth: 150, maxWidth: 250),
-      color: const Color(0xFF110e25),
+      // Sets the background color
+      color: GlobalVariables.secondaryColor,
       child: Column(
         children: [
-          WindowTitleBarBox(
-            child: MoveWindow(
-              child: Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: const [
-                    Text(
-                      " Code Snippet Saver",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
           Container(
             margin: const EdgeInsets.only(left: 40),
             height: MediaQuery.of(context).size.height - 90,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
+                // Home button
                 SidebarButton(
                   title: "Overview",
                   icon: Icons.folder,
-                  route: '/home',
+                  route: AppRoutes.homeRoute,
                 ),
+                // Add new snippet button
                 SidebarButton(
                   title: "Add",
                   icon: Icons.add,
-                  route: '/add',
+                  route: AppRoutes.addRoute,
                 ),
               ],
             ),
           ),
+          // Settings button
           const SidebarButton(
             title: "Settings",
             icon: Icons.settings,
-            route: '/settings',
+            route: AppRoutes.settingsRoute,
           ),
         ],
       ),
@@ -67,6 +54,7 @@ class _SideBarState extends State<SideBar> {
   }
 }
 
+// Funtion for the button navigation
 class SidebarButton extends StatelessWidget {
   const SidebarButton(
       {required this.icon,
@@ -83,12 +71,15 @@ class SidebarButton extends StatelessWidget {
       width: 200,
       child: Row(
         children: [
+          // Button icon
           Icon(
             icon,
             color: Colors.white,
           ),
+          // Button name
           TextButton(
             onPressed: () {
+              // Redirects to the selected route
               Navigator.of(context).pushNamed(route);
             },
             child: Text(
