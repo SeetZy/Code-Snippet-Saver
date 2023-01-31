@@ -53,6 +53,7 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF110e25),
       body: WindowBorder(
         width: 1,
         color: const Color.fromARGB(255, 14, 14, 14),

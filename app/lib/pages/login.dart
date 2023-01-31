@@ -3,17 +3,17 @@
  */
 import 'package:flutter/material.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({super.key});
+class Login extends StatelessWidget {
+  const Login({super.key});
   // Route for navigation
-  static const routeName = '/settings';
+  static const routeName = '/login';
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: const Center(
-        child: Text("settings"),
+        child: Text("login"),
       ),
     );
   }

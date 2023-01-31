@@ -10,6 +10,11 @@ class AddSnippet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("add"));
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: Text("add"),
+      ),
+    );
   }
 }
