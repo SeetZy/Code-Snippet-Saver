@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/bitsdojo_window
@@ -10,12 +11,16 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 void main() {
   runApp(App());
 
-  doWhenWindowReady(() {
-    // Defines the minimum dekstop window size
-    appWindow.minSize = const Size(1200, 650);
-    // Defines the desktop window title
-    appWindow.title = "Code Snippet Saver";
-  });
+  //  Checks the device OS
+  if (DeviceCheck().isDesktop) {
+    // Desktop OS specific code
+    doWhenWindowReady(() {
+      // Defines the minimum dekstop window size
+      appWindow.minSize = const Size(1200, 650);
+      // Defines the desktop window title
+      appWindow.title = "Code Snippet Saver";
+    });
+  }
 }
 
 // ignore: use_key_in_widget_constructors
@@ -33,7 +38,7 @@ class Root extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // Sets the default application route
-      initialRoute: AppRoutes.loginRoute,
+      initialRoute: AppRoutes.homeRoute,
       // Defines all the routes
       routes: AppRoutes.routes,
       theme: ThemeData(

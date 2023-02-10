@@ -23,7 +23,7 @@ class _SideBarState extends State<SideBar> {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 40),
-            height: MediaQuery.of(context).size.height - 90,
+            height: MediaQuery.of(context).size.height - 74,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
@@ -43,10 +43,13 @@ class _SideBarState extends State<SideBar> {
             ),
           ),
           // Settings button
-          const SidebarButton(
-            title: "Settings",
-            icon: Icons.settings,
-            route: AppRoutes.settingsRoute,
+          const Padding(
+            padding: EdgeInsets.only(bottom: 15, left: 15),
+            child: SidebarButton(
+              title: "Settings",
+              icon: Icons.settings,
+              route: AppRoutes.settingsRoute,
+            ),
           ),
         ],
       ),
