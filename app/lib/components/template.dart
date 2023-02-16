@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import 'package:app/utils/device.checker.dart';
 import 'package:app/app_components/sidebar.dart';
 import 'package:app/app_components/titlebar.dart';
 
@@ -16,10 +17,16 @@ class Template extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const TitleBar(),
+            Visibility(
+              visible: DeviceCheck().isDesktop,
+              child: const TitleBar(),
+            ),
             Row(
               children: [
-                const SideBar(),
+                Visibility(
+                  visible: DeviceCheck().isDesktop,
+                  child: const SideBar(),
+                ),
                 Expanded(
                   child: Container(
                     height: MediaQuery.of(context).size.height - 31,
