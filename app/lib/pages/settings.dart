@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 /*
   * Page/Component imports
  */
-
 import 'package:app/components/template.dart';
 
 class Settings extends StatelessWidget {
@@ -15,7 +14,8 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Template(
-      childW: Content(),
+      title: 'Settings',
+      child: Content(),
     );
   }
 }

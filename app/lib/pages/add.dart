@@ -15,7 +15,8 @@ class AddSnippet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Template(
-      childW: Content(),
+      title: 'Add Snippet',
+      child: Content(),
     );
   }
 }

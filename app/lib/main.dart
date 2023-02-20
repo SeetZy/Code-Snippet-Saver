@@ -2,22 +2,13 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
-import 'package:app/db/db.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/bitsdojo_window
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-// ? https://pub.dev/packages/supabase_flutter
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-  // Initializes the database
-  await Supabase.initialize(
-    url: SupabaseConstants.projURL,
-    anonKey: SupabaseConstants.apiKEY,
-  );
-
   // Runs the app
   runApp(App());
 
@@ -30,6 +21,8 @@ Future<void> main() async {
       // Defines the desktop window title
       appWindow.title = "Code Snippet Saver";
     });
+  } else if (DeviceCheck().isMobile) {
+    // Mobile specific code
   }
 }
 
