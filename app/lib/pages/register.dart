@@ -20,16 +20,8 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   // Controllers
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
-  // Initializes the controllers
-  @override
-  void initState() {
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-    super.initState();
-  }
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +61,7 @@ class _RegisterState extends State<Register> {
                           const Padding(
                             padding: EdgeInsets.all(40),
                             child: Text(
-                              "Register",
+                              "Sign Up",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -112,7 +104,7 @@ class _RegisterState extends State<Register> {
                                     String email = _emailController.text;
                                     String password = _passwordController.text;
                                   },
-                                  child: const Text("Register"),
+                                  child: const Text("Sign Up"),
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -123,7 +115,7 @@ class _RegisterState extends State<Register> {
                                         .pushNamed(AppRoutes.loginRoute);
                                   },
                                   child: const Text(
-                                    "Already a member? Click here to login",
+                                    "Already a member? Click here to sign in",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),

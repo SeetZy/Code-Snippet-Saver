@@ -20,16 +20,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   // Controllers
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
-  // Initializes the controllers
-  @override
-  void initState() {
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-    super.initState();
-  }
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +61,7 @@ class _LoginState extends State<Login> {
                           const Padding(
                             padding: EdgeInsets.all(40),
                             child: Text(
-                              "Login",
+                              "Sign In",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -102,7 +94,7 @@ class _LoginState extends State<Login> {
                             height: 10,
                           ),
 
-                          // Buttons for login and redirecting to register page
+                          // Buttons for to sign in the user
                           Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(
@@ -112,18 +104,19 @@ class _LoginState extends State<Login> {
                                     String email = _emailController.text;
                                     String password = _passwordController.text;
                                   },
-                                  child: const Text("Login"),
+                                  child: const Text("Sign In"),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
+                                // Button to redirect to the sign up page
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context)
                                         .pushNamed(AppRoutes.registerRoute);
                                   },
                                   child: const Text(
-                                    "Not a member? Click here to register",
+                                    "Not a member? Click here to sign up",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),

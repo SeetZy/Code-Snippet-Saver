@@ -1,6 +1,8 @@
 /*
   * Utility imports
  */
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/global.vars.dart';
@@ -9,6 +11,10 @@ import 'package:app/utils/app.routes.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 Future<void> main() async {
+  try {} catch (e) {
+    log(e.toString());
+  }
+
   // Runs the app
   runApp(App());
 
