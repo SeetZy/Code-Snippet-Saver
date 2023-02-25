@@ -21,7 +21,7 @@ module.exports = connectDb = async() => {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
-        .then(() => console.log('Mongoose connected to MongoDb database'))
+        .then(() => console.log(`Mongoose connected to MongoDb database`))
     } catch (error) {
         throw error
     }
