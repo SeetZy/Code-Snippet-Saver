@@ -5,7 +5,6 @@
     "node": "14.x"
   },
   "scripts": {
-    "start": "cd backend && npm run launch",
-    "launch": "npm i && node main"
+    "start": "cd backend && npm i && node main",
   }
 }
