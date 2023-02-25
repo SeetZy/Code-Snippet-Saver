@@ -6,5 +6,6 @@
   },
   "scripts": {
     "start": "cd backend && node main"
-  }
+  },
+  "postinstall": "cd backend && npm install"
 }
