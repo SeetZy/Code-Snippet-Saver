@@ -24,18 +24,26 @@ const app = express()
 // Define the port
 const port = process.env.PORT || 5000
 
+// This code checks if the environment variable NODE_ENV is set to development and if so, it logs HTTP requests to the console using morgan's dev format
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
+// This code enables Cross-Origin Resource Sharing (CORS)
 app.use(cors())
+
+// This code sets up body-parser middleware to handle JSON and URL encoded form data
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
 // The application uses the routes that are defined in the router file
 app.use(routes)
+
+// This code initializes passport authentication middleware and configures it with the passport configuration
 app.use(passport.initialize())
 require('./config/passport')(passport)
 
+// This code starts the server listening on the specified port
 app.listen(port, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port: ${port}`)
 });
