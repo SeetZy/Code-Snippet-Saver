@@ -5,8 +5,10 @@
 const jwtStrategy = require('passport-jwt').Strategy
 const extractJwt = require('passport-jwt').ExtractJwt
 
+// Get the user model
 const User = require('../models/user.model')
-const dbConfig = require('../db/db.config')
+// Get the db secret
+const dbSecret = require('../db/db.secret')
 
 /**
  * Exporting Passport.js configuration
@@ -17,7 +19,7 @@ module.exports = function (passport) {
   let options = {}
 
   // JWT secret used to sign and verify the token
-  options.secretOrKey = dbConfig.secret
+  options.secretOrKey = dbSecret.secret
   // Method used to extract the JWT token from the request headers
   options.jwtFromRequest = extractJwt.fromAuthHeaderWithScheme('jwt')
 

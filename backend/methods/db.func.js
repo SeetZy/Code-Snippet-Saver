@@ -4,8 +4,10 @@
 // ? https://www.npmjs.com/package/jwt-simple
 const jwt = require('jwt-simple')
 
+// Get the user model
 const User = require('../models/user.model')
-const config = require('../db/db.config')
+// Get the db secret
+const dbSecret = require('../db/db.secret')
 
 // Defines functions object to be exported
 module.exports = functions = {
@@ -42,49 +44,27 @@ module.exports = functions = {
 
         if (!User) {
           // If no user with matching email is found
-          res
-            .status(403)
-            .send({
-              success: false,
-              msg: 'Authentication has failed, no matching user has been found',
-            })
+          res.status(403).send({
+            success: false,
+            msg: 'Authentication has failed, no matching user has been found',
+          })
         } else {
           // If user with matching email is found, compare the provided password with the hashed password
           User.comparePassword(req.body.password, function (err, isMatch) {
             if (isMatch && !err) {
               // If passwords match, create a token with the user object and secret key and send it back
-              let token = jwt.encode(User, config.secret)
+              let token = jwt.encode(User, dbSecret.secret)
               res.json({ success: true, token: token })
             } else {
               // If passwords don't match
-              return res
-                .status(403)
-                .send({
-                  success: false,
-                  msg: 'Authentification has failed incorrect password',
-                })
+              return res.status(403).send({
+                success: false,
+                msg: 'Authentification has failed incorrect password',
+              })
             }
           })
         }
       }
     )
-  },
-
-  // Function to get user info from the token
-  getInfo: function (req, res) {
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.split(' ')[0] === 'Bearer'
-    ) {
-      // If authorization header is present and the format is 'Bearer <token>'
-      let token = req.headers.authorization.split(' ')[1]
-      let decodedtoken = jwt.decode(token, config.secret)
-
-      // Extracting user email from the decoded token and sending it back
-      return res.json({ success: true, msg: 'Hello ' + decodedtoken.email })
-    } else {
-      // If authorization header is not present or not in the correct format
-      return res.json({ success: false, msg: 'No headers' })
-    }
   },
 }

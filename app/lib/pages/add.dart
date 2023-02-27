@@ -8,13 +8,14 @@ import 'package:flutter/material.dart';
  */
 
 import 'package:app/components/template.dart';
+import 'package:pluto_code_editor/pluto_code_editor.dart';
 
 class AddSnippet extends StatelessWidget {
   const AddSnippet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Template(
+    return Template(
       title: 'Add Snippet',
       child: Content(),
     );
@@ -22,17 +23,17 @@ class AddSnippet extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  const Content({super.key});
+  Content({super.key});
+
+  PlutoCodeEditorController controller =
+      PlutoCodeEditorController(theme: EditorTheme());
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: const Center(
-        child: Text(
-          "add",
-          style: TextStyle(color: Colors.black),
-        ),
+    return Expanded(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 74,
+        child: PlutoCodeEditor(controller: controller),
       ),
     );
   }

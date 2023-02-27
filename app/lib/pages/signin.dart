@@ -1,27 +1,34 @@
 /*
   * Utility imports
  */
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
+import 'package:app/services/auth.dart';
+// ? https://pub.dev/packages/email_validator
+import 'package:email_validator/email_validator.dart';
 
 /*
   * Page/component imports
  */
-import '../app_components/titlebar.dart';
+import 'package:app/app_components/titlebar.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _RegisterState extends State<Register> {
+class _SignInState extends State<SignIn> {
   // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  // ignore: prefer_typing_uninitialized_variables
+  var token;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +57,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     width: 300,
-                    height: 500,
+                    height: 450,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -61,7 +68,7 @@ class _RegisterState extends State<Register> {
                           const Padding(
                             padding: EdgeInsets.all(40),
                             child: Text(
-                              "Sign Up",
+                              "Sign In",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -94,28 +101,41 @@ class _RegisterState extends State<Register> {
                             height: 10,
                           ),
 
-                          // Buttons for Register and redirecting to login page
+                          // Buttons for to sign in the user
                           Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
+                                    // Get the controller input as text
                                     String email = _emailController.text;
                                     String password = _passwordController.text;
+
+                                    // Checks if the inputted email is valid
+                                    if (EmailValidator.validate(email) ==
+                                        true) {
+                                      AuthService()
+                                          .signIn(email, password)
+                                          .then((val) {
+                                        token = val.data['token'];
+                                        log('User has signed in');
+                                      });
+                                    } else {}
                                   },
-                                  child: const Text("Sign Up"),
+                                  child: const Text("Sign In"),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
+                                // Button to redirect to the sign up page
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context)
-                                        .pushNamed(AppRoutes.loginRoute);
+                                        .pushNamed(AppRoutes.signupRoute);
                                   },
                                   child: const Text(
-                                    "Already a member? Click here to sign in",
+                                    "Not a member? Click here to sign up",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),

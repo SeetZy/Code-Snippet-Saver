@@ -1,7 +1,6 @@
 /*
   * Utility imports
  */
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/global.vars.dart';
@@ -34,7 +33,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // Sets the default application route
-      initialRoute: AppRoutes.loginRoute,
+      initialRoute: AppRoutes.homeRoute,
       // Defines all the routes
       routes: AppRoutes.routes,
       theme: ThemeData(

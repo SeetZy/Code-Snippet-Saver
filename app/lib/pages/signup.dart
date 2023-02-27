@@ -1,27 +1,36 @@
 /*
   * Utility imports
  */
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
+import 'package:app/services/auth.dart';
+// ? https://pub.dev/packages/email_validator
+import 'package:email_validator/email_validator.dart';
 
 /*
   * Page/component imports
  */
-import 'package:app/app_components/titlebar.dart';
+import '../app_components/titlebar.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  // ignore: prefer_typing_uninitialized_variables
+  var token;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     width: 300,
-                    height: 450,
+                    height: 500,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -61,7 +70,7 @@ class _LoginState extends State<Login> {
                           const Padding(
                             padding: EdgeInsets.all(40),
                             child: Text(
-                              "Sign In",
+                              "Sign Up",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -94,29 +103,59 @@ class _LoginState extends State<Login> {
                             height: 10,
                           ),
 
-                          // Buttons for to sign in the user
+                          // Password text input field
+                          TextField(
+                            obscureText: true,
+                            controller: _confirmPasswordController,
+                            decoration: const InputDecoration(
+                              hintText: "Confirm Password",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+
+                          // Buttons for SignUp and redirecting to login page
                           Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
+                                    // Get the controller input as text
                                     String email = _emailController.text;
                                     String password = _passwordController.text;
+                                    String confirmPassword =
+                                        _confirmPasswordController.text;
+
+                                    // Checks if the inputted email is valid
+                                    if (EmailValidator.validate(email) ==
+                                        true) {
+                                      if (password == confirmPassword) {
+                                        AuthService()
+                                            .signUp(email, password)
+                                            .then((val) {
+                                          token = val.data['token'];
+                                          log('User has signed up');
+                                        });
+                                      }
+                                    } else {
+                                      log('pidars esi');
+                                    }
                                   },
-                                  child: const Text("Sign In"),
+                                  child: const Text("Sign Up"),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                // Button to redirect to the sign up page
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context)
-                                        .pushNamed(AppRoutes.registerRoute);
+                                        .pushNamed(AppRoutes.signinRoute);
                                   },
                                   child: const Text(
-                                    "Not a member? Click here to sign up",
+                                    "Already a member? Click here to sign in",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),
