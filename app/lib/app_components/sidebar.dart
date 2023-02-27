@@ -23,7 +23,7 @@ class _SideBarState extends State<SideBar> {
     return Container(
       constraints: const BoxConstraints(minWidth: 150, maxWidth: 250),
       // Sets the background color
-      color: GlobalVariables.secondaryColor,
+      color: GlobalVariables.primaryColor,
       child: Column(
         children: [
           Container(

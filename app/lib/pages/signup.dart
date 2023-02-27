@@ -53,7 +53,7 @@ class _SignUpState extends State<SignUp> {
                   child: Container(
                     // Container style
                     decoration: const BoxDecoration(
-                      color: GlobalVariables.secondaryColor,
+                      color: GlobalVariables.primaryColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
@@ -141,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                                         });
                                       }
                                     } else {
-                                      log('pidars esi');
+                                      log('wrong email or password');
                                     }
                                   },
                                   child: const Text("Sign Up"),

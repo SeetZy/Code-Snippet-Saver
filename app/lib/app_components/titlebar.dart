@@ -17,7 +17,7 @@ class _TitleBarState extends State<TitleBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: GlobalVariables.secondaryColor,
+      color: GlobalVariables.primaryColor,
       child: Column(
         children: [
           WindowTitleBarBox(

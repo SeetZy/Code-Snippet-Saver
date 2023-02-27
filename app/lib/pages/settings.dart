@@ -25,12 +25,10 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: const Center(
+    return const Expanded(
+      child: Center(
         child: Text(
-          "settings",
-          style: TextStyle(color: Colors.black),
+          "Settings",
         ),
       ),
     );

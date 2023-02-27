@@ -17,7 +17,7 @@ Future<void> main() async {
     // Desktop OS specific code
     doWhenWindowReady(() {
       // Defines the minimum dekstop window size
-      appWindow.minSize = const Size(1200, 650);
+      appWindow.minSize = const Size(1250, 650);
       // Defines the desktop window title
       appWindow.title = "Code Snippet Saver";
     });
@@ -38,7 +38,7 @@ class App extends StatelessWidget {
       routes: AppRoutes.routes,
       theme: ThemeData(
         colorScheme:
-            const ColorScheme.dark(primary: GlobalVariables.primaryColor),
+            const ColorScheme.dark(primary: GlobalVariables.accentColor),
       ),
     );
   }

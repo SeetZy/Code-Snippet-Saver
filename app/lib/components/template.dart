@@ -24,12 +24,12 @@ class Template extends StatelessWidget {
     return Scaffold(
       appBar: DeviceCheck().isMobile
           ? AppBar(
-              backgroundColor: GlobalVariables.secondaryColor,
+              backgroundColor: GlobalVariables.primaryColor,
             )
           : null,
       drawer: DeviceCheck().isMobile
           ? Drawer(
-              backgroundColor: GlobalVariables.secondaryColor,
+              backgroundColor: GlobalVariables.primaryColor,
               child: Column(
                 children: [
                   Container(
@@ -84,7 +84,7 @@ class Template extends StatelessWidget {
                 Expanded(
                   child: Container(
                     height: MediaQuery.of(context).size.height - 31,
-                    color: Colors.white,
+                    color: GlobalVariables.secondaryColor,
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: child,

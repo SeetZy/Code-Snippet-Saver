@@ -51,7 +51,7 @@ class _SignInState extends State<SignIn> {
                   child: Container(
                     // Container style
                     decoration: const BoxDecoration(
-                      color: GlobalVariables.secondaryColor,
+                      color: GlobalVariables.primaryColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
@@ -121,7 +121,9 @@ class _SignInState extends State<SignIn> {
                                         token = val.data['token'];
                                         log('User has signed in');
                                       });
-                                    } else {}
+                                    } else {
+                                      log('wrong email or password');
+                                    }
                                   },
                                   child: const Text("Sign In"),
                                 ),

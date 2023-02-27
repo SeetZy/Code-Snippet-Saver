@@ -32,7 +32,6 @@ class Content extends StatelessWidget {
         const Center(
           child: Text(
             "Welcome ",
-            style: TextStyle(color: Colors.black),
           ),
         ),
 

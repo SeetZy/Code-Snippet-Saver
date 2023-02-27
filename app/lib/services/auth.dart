@@ -14,8 +14,8 @@ class AuthService {
         data: {"email": email, "password": password},
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
-    } on DioError catch (e) {
-      print(e.response!.data);
+    } on DioError {
+      rethrow;
     }
   }
 
@@ -27,8 +27,8 @@ class AuthService {
         data: {"email": email, "password": password},
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
-    } on DioError catch (e) {
-      print(e.response!.data);
+    } on DioError {
+      rethrow;
     }
   }
 }
