@@ -11,13 +11,13 @@ const router = express.Router()
 
 // Default Route
 router.get('/', (req, res) => {
-    res.send('This is not meant to be viewed')
+  res.send('This is not meant to be viewed')
 })
 
 // Route to signup a new user
-router.post('/signup', actions.addNew)
+router.post('/signup', actions.signUp)
 
 // Route to signin a new user
-router.post('/signin', actions.authenticate)
+router.post('/signin', actions.signIn)
 
 module.exports = router

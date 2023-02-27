@@ -32,5 +32,8 @@
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1"
+  },
+  "devDependencies": {
+    "prettier": "2.8.4"
   }
 }
