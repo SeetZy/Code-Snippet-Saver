@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 
 class SaveSnippet extends StatelessWidget {
-  const SaveSnippet({super.key});
+  const SaveSnippet({super.key, required this.codeSnippet});
+
+  final TextEditingController codeSnippet;
 
   @override
   Widget build(BuildContext context) {

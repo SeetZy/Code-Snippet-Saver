@@ -9,8 +9,8 @@ import 'package:code_editor/code_editor.dart';
 /*
   * Page/Component imports
  */
-import 'package:app/components/save.popup.dart';
 import 'package:app/components/template.dart';
+import 'package:app/components/save.popup.dart';
 
 class AddSnippet extends StatelessWidget {
   const AddSnippet({super.key});
@@ -30,7 +30,6 @@ class Content extends StatelessWidget {
 
   // Controllers
   final TextEditingController _codeEditor = TextEditingController();
-  late String code = "";
 
   @override
   Widget build(BuildContext context) {
@@ -79,39 +78,49 @@ class Content extends StatelessWidget {
             textEditingController: _codeEditor,
           ),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: ElevatedButton(
-            onPressed: () {
-              // Get the controller input as text
-              String codeSnippet = _codeEditor.text;
-
-              // Pop up screen to add new patients
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const SaveSnippet();
-                },
-              );
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: GlobalVariables.accentColor2),
-            child: SizedBox(
-              width: 60,
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.save,
-                    color: Colors.white,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Text(
+              "Supported languages: Python, Ruby, HTML, CSS",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Pop up screen to add new patients
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return SaveSnippet(
+                          codeSnippet: _codeEditor,
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: GlobalVariables.accentColor2),
+                  child: SizedBox(
+                    width: 60,
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.save,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          ' Save',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    ' Save',
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ],
     );

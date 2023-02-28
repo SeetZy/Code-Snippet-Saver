@@ -7,7 +7,6 @@ import 'package:app/utils/app.routes.dart';
 /*
   * Page/Component imports
  */
-
 import 'package:app/components/template.dart';
 
 class Home extends StatelessWidget {
