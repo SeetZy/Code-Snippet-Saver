@@ -2,14 +2,14 @@
   * Utility imports
  */
 import 'dart:convert';
-
-import 'package:app/utils/http.routes.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
+import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
 import 'package:email_validator/email_validator.dart';
+// ? https://pub.dev/packages/http
 import 'package:http/http.dart' as http;
 
 /*
@@ -30,25 +30,34 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
 
-  void signUp() async {
+  void signUpUser() async {
     if (_usernameController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
-      var regBody = {
-        "username": _usernameController.text,
-        "email": _emailController.text,
-        "password": _passwordController,
-      };
+      if (EmailValidator.validate(_emailController.text) == true) {
+        var regBody = {
+          "username": _usernameController.text,
+          "email": _emailController.text,
+          "password": _passwordController.text,
+        };
 
-      var response = await http.post(
-        Uri.parse(HttpRoutes.signUpUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(regBody),
-      );
+        var response = await http.post(
+          Uri.parse(HttpRoutes.signUpUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(regBody),
+        );
 
-      print(response);
-    } else {
-      setState(() {});
+        var jsonResponse = jsonDecode(response.body);
+
+        print(jsonResponse['status']);
+
+        if (jsonResponse['status']) {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pushNamed(AppRoutes.signinRoute);
+        } else {
+          print('something went wrong');
+        }
+      }
     }
   }
 
@@ -100,7 +109,6 @@ class _SignUpState extends State<SignUp> {
 
                           // Username text input field
                           TextField(
-                            obscureText: true,
                             controller: _usernameController,
                             decoration: const InputDecoration(
                               hintText: "Username",
@@ -143,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    signUp();
+                                    signUpUser();
                                   },
                                   child: const Text("Sign Up"),
                                 ),

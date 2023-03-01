@@ -18,6 +18,6 @@ router.get('/', (req, res) => {
 router.post('/signup', UserController.register)
 
 // Route to signin a new user
-router.post('/signin')
+router.post('/signin', UserController.login)
 
 module.exports = router

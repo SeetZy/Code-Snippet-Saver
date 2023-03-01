@@ -3,34 +3,54 @@
  */
 import 'package:flutter/material.dart';
 import 'package:app/utils/app.routes.dart';
+// ? https://pub.dev/packages/jwt_decoder
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 /*
   * Page/Component imports
  */
 import 'package:app/components/template.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Home extends StatefulWidget {
+  final token;
+  const Home({super.key, @required this.token});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  static late String email;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+
+    email = jwtDecodedToken['email'];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Template(
+    return Template(
       title: 'Overview',
-      child: Content(),
+      child: Content(email: email),
     );
   }
 }
 
 class Content extends StatelessWidget {
-  const Content({super.key});
+  const Content({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const Center(
+        Center(
           child: Text(
-            "Welcome ",
+            "Welcome $email",
           ),
         ),
 

@@ -1,14 +1,19 @@
 /*
   * Utility imports
  */
-import 'dart:developer';
+import 'dart:convert';
+import 'package:app/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
-import 'package:app/services/auth.dart';
+import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
 import 'package:email_validator/email_validator.dart';
+// ? https://pub.dev/packages/http
+import 'package:http/http.dart' as http;
+// ? https://pub.dev/packages/shared_preferences
+import 'package:shared_preferences/shared_preferences.dart';
 
 /*
   * Page/component imports
@@ -27,8 +32,50 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // ignore: prefer_typing_uninitialized_variables
-  var token;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initSharedPrefs();
+  }
+
+  void initSharedPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  void signInUser() async {
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      if (EmailValidator.validate(_emailController.text) == true) {
+        var regBody = {
+          "email": _emailController.text,
+          "password": _passwordController.text,
+        };
+
+        var response = await http.post(
+          Uri.parse(HttpRoutes.signInUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(regBody),
+        );
+
+        var jsonResponse = jsonDecode(response.body);
+
+        print(jsonResponse['status']);
+
+        if (jsonResponse['status']) {
+          var token = jsonResponse['token'];
+          prefs.setString('token', token);
+          // ignore: use_build_context_synchronously
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Home(token: token)));
+        } else {
+          print('something went wrong');
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,22 +155,7 @@ class _SignInState extends State<SignIn> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    // Get the controller input as text
-                                    String email = _emailController.text;
-                                    String password = _passwordController.text;
-
-                                    // Checks if the inputted email is valid
-                                    if (EmailValidator.validate(email) ==
-                                        true) {
-                                      AuthService()
-                                          .signIn(email, password)
-                                          .then((val) {
-                                        token = val.data['token'];
-                                        log('User has signed in');
-                                      });
-                                    } else {
-                                      log('wrong email or password');
-                                    }
+                                    signInUser();
                                   },
                                   child: const Text("Sign In"),
                                 ),
