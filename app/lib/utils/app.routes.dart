@@ -17,8 +17,14 @@ class AppRoutes {
   static final routes = {
     signinRoute: (context) => const SignIn(),
     signupRoute: (context) => const SignUp(),
-    homeRoute: (context) => const Home(),
-    addRoute: (context) => const AddSnippet(),
-    settingsRoute: (context) => const Settings(),
+    homeRoute: (context) => const Home(
+          token: null,
+        ),
+    addRoute: (context) => const AddSnippet(
+          token: null,
+        ),
+    settingsRoute: (context) => const Settings(
+          token: null,
+        ),
   };
 }

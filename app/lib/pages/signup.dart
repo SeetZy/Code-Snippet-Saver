@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
@@ -28,31 +29,38 @@ class _SignUpState extends State<SignUp> {
   // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   void signUpUser() async {
+    // Checks if the text fields are filled
     if (_emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty) {
+        _passwordController.text.isNotEmpty &&
+        _confirmPasswordController.text.isNotEmpty) {
+      // Checks if the provided email is valid
       if (EmailValidator.validate(_emailController.text) == true) {
-        var regBody = {
-          "email": _emailController.text,
-          "password": _passwordController.text,
-        };
+        // Checks if the provided passwords are valid
+        // ignore: unrelated_type_equality_checks
+        if (_passwordController.text == _confirmPasswordController.text) {
+          var regBody = {
+            "email": _emailController.text,
+            "password": _passwordController.text,
+          };
 
-        var response = await http.post(
-          Uri.parse(HttpRoutes.signUpUrl),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(regBody),
-        );
+          var response = await http.post(
+            Uri.parse(HttpRoutes.signUpUrl),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(regBody),
+          );
 
-        var jsonResponse = jsonDecode(response.body);
+          var jsonResponse = jsonDecode(response.body);
 
-        print(jsonResponse['status']);
-
-        if (jsonResponse['status']) {
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pushNamed(AppRoutes.signinRoute);
-        } else {
-          print('something went wrong');
+          if (jsonResponse['status']) {
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).pushNamed(AppRoutes.signinRoute);
+          } else {
+            log('something went wrong');
+          }
         }
       }
     }
@@ -120,6 +128,19 @@ class _SignUpState extends State<SignUp> {
                           TextField(
                             obscureText: true,
                             controller: _passwordController,
+                            decoration: const InputDecoration(
+                              hintText: "Password",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+
+                          // Password text input field
+                          TextField(
+                            obscureText: true,
+                            controller: _confirmPasswordController,
                             decoration: const InputDecoration(
                               hintText: "Password",
                               border: OutlineInputBorder(),

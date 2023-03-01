@@ -8,7 +8,7 @@ import 'package:app/utils/app.routes.dart';
 /*
   * Page/component imports
  */
-import 'package:app/components/navbar.btn.dart';
+import 'package:app/components/nav.btn.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});

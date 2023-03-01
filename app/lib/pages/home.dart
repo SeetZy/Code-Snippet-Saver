@@ -9,9 +9,10 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 /*
   * Page/Component imports
  */
-import 'package:app/components/template.dart';
+import 'package:app/components/baseplate.dart';
 
 class Home extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final token;
   const Home({super.key, @required this.token});
 
@@ -23,16 +24,16 @@ class _HomeState extends State<Home> {
   static late String email;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-
-    email = jwtDecodedToken['email'];
+    if (widget.token != null) {
+      Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+      email = jwtDecodedToken['email'];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Template(
+    return Baseplate(
       title: 'Overview',
       child: Content(email: email),
     );
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
 }
 
 class Content extends StatelessWidget {
-  const Content({super.key, required this.email});
+  const Content({Key? key, required this.email}) : super(key: key);
 
   final String email;
 

@@ -2,7 +2,7 @@
   * Utility imports
  */
 import 'dart:convert';
-import 'package:app/pages/home.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
   * Page/component imports
  */
 import 'package:app/app_components/titlebar.dart';
+import 'package:app/pages/home.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -36,7 +37,6 @@ class _SignInState extends State<SignIn> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initSharedPrefs();
   }
@@ -62,16 +62,18 @@ class _SignInState extends State<SignIn> {
 
         var jsonResponse = jsonDecode(response.body);
 
-        print(jsonResponse['status']);
-
         if (jsonResponse['status']) {
           var token = jsonResponse['token'];
           prefs.setString('token', token);
           // ignore: use_build_context_synchronously
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Home(token: token)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home(
+                        token: token,
+                      )));
         } else {
-          print('something went wrong');
+          log('something went wrong');
         }
       }
     }

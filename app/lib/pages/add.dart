@@ -5,30 +5,47 @@ import 'package:app/utils/global.vars.dart';
 import 'package:flutter/material.dart';
 // ? https://pub.dev/packages/code_editor
 import 'package:code_editor/code_editor.dart';
+// ? https://pub.dev/packages/jwt_decoder
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 /*
   * Page/Component imports
  */
-import 'package:app/components/template.dart';
 import 'package:app/components/save.popup.dart';
+import '../components/baseplate.dart';
 
-class AddSnippet extends StatelessWidget {
-  const AddSnippet({super.key});
+class AddSnippet extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final token;
+  const AddSnippet({super.key, @required this.token});
+
+  @override
+  State<AddSnippet> createState() => _AddSnippetState();
+}
+
+class _AddSnippetState extends State<AddSnippet> {
+  static late String email;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.token != null) {
+      Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+      email = jwtDecodedToken['email'];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Template(
-      title: 'Add Snippet',
+    return Baseplate(
+      title: 'Add',
       child: Content(),
     );
   }
 }
 
-// ignore: must_be_immutable
 class Content extends StatelessWidget {
   Content({super.key});
-
-  // Controllers
+// Controllers
   final TextEditingController _codeEditor = TextEditingController();
 
   @override

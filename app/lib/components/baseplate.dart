@@ -1,20 +1,20 @@
 /*
   * Utility imports
  */
-import 'package:app/utils/global.vars.dart';
 import 'package:flutter/material.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 import 'package:app/utils/device.checker.dart';
 
 /*
   * Page/component imports
  */
-import 'package:app/components/navbar.btn.dart';
+import 'package:app/components/nav.btn.dart';
 import 'package:app/app_components/sidebar.dart';
 import 'package:app/app_components/titlebar.dart';
 
-class Template extends StatelessWidget {
-  const Template({super.key, required this.child, required this.title});
+class Baseplate extends StatelessWidget {
+  const Baseplate({super.key, required this.child, required this.title});
 
   final Widget child;
   final String title;
