@@ -3,18 +3,18 @@ const jwt = require('jsonwebtoken')
 const UserModel = require('../models/user.model')
 
 class UserService {
-  static async registerUser(username, email, password) {
+  static async registerUser(email, password) {
     try {
-      const createUser = new UserModel({ username, email, password })
+      const createUser = new UserModel({ email, password })
       return await createUser.save()
     } catch (error) {
       throw error
     }
   }
 
-  static async checkuser(username, email) {
+  static async checkuser(email) {
     try {
-      return await UserModel.findOne({ username, email })
+      return await UserModel.findOne({ email })
     } catch (error) {
       throw error
     }

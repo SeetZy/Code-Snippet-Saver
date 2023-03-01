@@ -28,15 +28,12 @@ class _SignUpState extends State<SignUp> {
   // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
 
   void signUpUser() async {
-    if (_usernameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
+    if (_emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
       if (EmailValidator.validate(_emailController.text) == true) {
         var regBody = {
-          "username": _usernameController.text,
           "email": _emailController.text,
           "password": _passwordController.text,
         };
@@ -105,18 +102,6 @@ class _SignUpState extends State<SignUp> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-
-                          // Username text input field
-                          TextField(
-                            controller: _usernameController,
-                            decoration: const InputDecoration(
-                              hintText: "Username",
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
                           ),
 
                           // Email text input field

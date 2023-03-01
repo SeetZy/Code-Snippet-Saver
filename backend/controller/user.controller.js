@@ -2,8 +2,8 @@ const UserService = require('../services/user.services')
 
 exports.register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body
-    const successRes = await UserService.registerUser(username, email, password)
+    const { email, password } = req.body
+    const successRes = await UserService.registerUser(email, password)
 
     res.json({ status: true, success: 'User Registered' })
   } catch (error) {
@@ -13,8 +13,8 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body
-    const user = await UserService.checkuser(username, email)
+    const { email, password } = req.body
+    const user = await UserService.checkuser(email)
 
     if (!user) {
       throw new Error('User does not exist')
@@ -28,7 +28,6 @@ exports.login = async (req, res, next) => {
 
     let tokenData = {
       _id: user._id,
-      username: user.username,
       email: user.email,
     }
 
