@@ -1,14 +1,16 @@
 /*
   * Utility imports
  */
-import 'dart:developer';
+import 'dart:convert';
+
+import 'package:app/utils/http.routes.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
-import 'package:app/services/auth.dart';
 // ? https://pub.dev/packages/email_validator
 import 'package:email_validator/email_validator.dart';
+import 'package:http/http.dart' as http;
 
 /*
   * Page/component imports
@@ -26,11 +28,29 @@ class _SignUpState extends State<SignUp> {
   // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
-  // ignore: prefer_typing_uninitialized_variables
-  var token;
+  void signUp() async {
+    if (_usernameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      var regBody = {
+        "username": _usernameController.text,
+        "email": _emailController.text,
+        "password": _passwordController,
+      };
+
+      var response = await http.post(
+        Uri.parse(HttpRoutes.signUpUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(regBody),
+      );
+
+      print(response);
+    } else {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +98,19 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
 
+                          // Username text input field
+                          TextField(
+                            obscureText: true,
+                            controller: _usernameController,
+                            decoration: const InputDecoration(
+                              hintText: "Username",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+
                           // Email text input field
                           TextField(
                             controller: _emailController,
@@ -103,19 +136,6 @@ class _SignUpState extends State<SignUp> {
                             height: 10,
                           ),
 
-                          // Password text input field
-                          TextField(
-                            obscureText: true,
-                            controller: _confirmPasswordController,
-                            decoration: const InputDecoration(
-                              hintText: "Confirm Password",
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-
                           // Buttons for SignUp and redirecting to login page
                           Padding(
                             padding: const EdgeInsets.all(20),
@@ -123,26 +143,7 @@ class _SignUpState extends State<SignUp> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    // Get the controller input as text
-                                    String email = _emailController.text;
-                                    String password = _passwordController.text;
-                                    String confirmPassword =
-                                        _confirmPasswordController.text;
-
-                                    // Checks if the inputted email is valid
-                                    if (EmailValidator.validate(email) ==
-                                        true) {
-                                      if (password == confirmPassword) {
-                                        AuthService()
-                                            .signUp(email, password)
-                                            .then((val) {
-                                          token = val.data['token'];
-                                          log('User has signed up');
-                                        });
-                                      }
-                                    } else {
-                                      log('wrong email or password');
-                                    }
+                                    signUp();
                                   },
                                   child: const Text("Sign Up"),
                                 ),

@@ -82,7 +82,7 @@ class Content extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const Text(
-              "Supported languages: Python, Ruby, HTML, CSS",
+              "Languages supported by syntax highlighting: Python, Ruby, JavaScript, HTML, CSS",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Expanded(
@@ -103,7 +103,7 @@ class Content extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: GlobalVariables.accentColor2),
                   child: SizedBox(
-                    width: 60,
+                    width: 65,
                     child: Row(
                       children: const [
                         Icon(
@@ -112,7 +112,10 @@ class Content extends StatelessWidget {
                         ),
                         Text(
                           ' Save',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

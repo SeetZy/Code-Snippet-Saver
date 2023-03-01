@@ -7,13 +7,14 @@ const express = require('express')
 const morgan = require('morgan')
 // ? https://www.npmjs.com/package/cors
 const cors = require('cors')
-// ? https://www.npmjs.com/package/passport
-const passport = require('passport')
 // ? https://www.npmjs.com/package/body-parser
 const bodyParser = require('body-parser')
 
 const connectDb = require('./db/db')
 const routes = require('./routes/router')
+
+// Loads all the data schemas in the database
+const userModel = require('./models/user.model')
 
 // Connects to MongoDb
 connectDb()
@@ -38,10 +39,6 @@ app.use(bodyParser.json())
 
 // The application uses the routes that are defined in the router file
 app.use(routes)
-
-// This code initializes passport authentication middleware and configures it with the passport configuration
-app.use(passport.initialize())
-require('./config/passport')(passport)
 
 // This code starts the server listening on the specified port
 app.listen(port, () => {

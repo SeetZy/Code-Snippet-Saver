@@ -33,7 +33,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // Sets the default application route
-      initialRoute: AppRoutes.homeRoute,
+      initialRoute: AppRoutes.signinRoute,
       // Defines all the routes
       routes: AppRoutes.routes,
       theme: ThemeData(
