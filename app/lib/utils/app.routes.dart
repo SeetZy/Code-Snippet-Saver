@@ -20,11 +20,7 @@ class AppRoutes {
     homeRoute: (context) => const Home(
           token: null,
         ),
-    addRoute: (context) => const AddSnippet(
-          token: null,
-        ),
-    settingsRoute: (context) => const Settings(
-          token: null,
-        ),
+    addRoute: (context) => const AddSnippet(),
+    settingsRoute: (context) => const Settings(),
   };
 }

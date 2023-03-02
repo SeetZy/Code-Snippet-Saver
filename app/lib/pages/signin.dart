@@ -1,25 +1,15 @@
 /*
   * Utility imports
  */
-import 'dart:convert';
-import 'dart:developer';
+import 'package:app/services/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
-import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
-import 'package:app/utils/http.routes.dart';
-// ? https://pub.dev/packages/email_validator
-import 'package:email_validator/email_validator.dart';
-// ? https://pub.dev/packages/http
-import 'package:http/http.dart' as http;
-// ? https://pub.dev/packages/shared_preferences
-import 'package:shared_preferences/shared_preferences.dart';
 
 /*
   * Page/component imports
  */
 import 'package:app/app_components/titlebar.dart';
-import 'package:app/pages/home.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -33,50 +23,10 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  late SharedPreferences prefs;
-
   @override
   void initState() {
     super.initState();
-    initSharedPrefs();
-  }
-
-  void initSharedPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  void signInUser() async {
-    if (_emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty) {
-      if (EmailValidator.validate(_emailController.text) == true) {
-        var regBody = {
-          "email": _emailController.text,
-          "password": _passwordController.text,
-        };
-
-        var response = await http.post(
-          Uri.parse(HttpRoutes.signInUrl),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(regBody),
-        );
-
-        var jsonResponse = jsonDecode(response.body);
-
-        if (jsonResponse['status']) {
-          var token = jsonResponse['token'];
-          prefs.setString('token', token);
-          // ignore: use_build_context_synchronously
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Home(
-                        token: token,
-                      )));
-        } else {
-          log('something went wrong');
-        }
-      }
-    }
+    AuthService.initSharedPrefs();
   }
 
   @override
@@ -85,11 +35,7 @@ class _SignInState extends State<SignIn> {
       body: SafeArea(
         child: Column(
           children: [
-            // Uses the titlebar widget
-            Visibility(
-              visible: DeviceCheck().isDesktop,
-              child: const TitleBar(),
-            ),
+            const TitleBar(),
             Expanded(
               child: Container(
                 // Container style
@@ -157,7 +103,13 @@ class _SignInState extends State<SignIn> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    signInUser();
+                                    // Get the controller input as text
+                                    final String email = _emailController.text;
+                                    final String password =
+                                        _passwordController.text;
+
+                                    AuthService.signInUser(
+                                        context, email, password);
                                   },
                                   child: const Text("Sign In"),
                                 ),

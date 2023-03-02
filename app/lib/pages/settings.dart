@@ -3,8 +3,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
-// ? https://pub.dev/packages/jwt_decoder
-import 'package:jwt_decoder/jwt_decoder.dart';
+import '../services/user.info.dart';
 
 /*
   * Page/Component imports
@@ -12,9 +11,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:app/components/baseplate.dart';
 
 class Settings extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final token;
-  const Settings({super.key, @required this.token});
+  const Settings({super.key});
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -39,12 +36,13 @@ class Content extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
+          children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Text(
-                "Settings of",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                "Settings of ${UserInfo.email}",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
             )
           ],
@@ -60,8 +58,7 @@ class Content extends StatelessWidget {
             onPressed: () {},
             label: const Text(
               "Logout",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white),
             ),
             icon: const Icon(
               Icons.logout,

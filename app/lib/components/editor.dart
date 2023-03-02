@@ -11,6 +11,21 @@ class CodeEditor extends StatelessWidget {
 
   final TextEditingController snippetController;
 
+  // Defines default code in hint text
+  static final List<String> defaultCode = [
+    '# Default code',
+    'class Car:',
+    '\tdef __init__(self, make, model):',
+    '\t\tself.make = make>',
+    '\t\tself.model = model',
+    '',
+    '\tdef start(self):',
+    '\t\tprint(f"{self.make} {self.model} is starting.")',
+    '',
+    'car = Car("Toyota", "Corolla")',
+    'car.start()'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,11 +33,10 @@ class CodeEditor extends StatelessWidget {
       child: TextField(
         expands: true,
         maxLines: null,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText:
-              '# Default code\n\nclass Car:\n\tdef __init__(self, make, model):\n\t\tself.make = make>\n\t\tself.model = model\n\n\tdef start(self):\n\t\tprint(f"{self.make} {self.model} is starting.")\n\ncar = Car("Toyota", "Corolla")\ncar.start()',
-          contentPadding: EdgeInsets.all(16.0),
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: defaultCode.join('\n'), // add this line
+          contentPadding: const EdgeInsets.all(16.0),
         ),
         style: const TextStyle(fontSize: 16.0),
         controller: snippetController,

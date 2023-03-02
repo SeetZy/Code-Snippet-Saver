@@ -2,7 +2,6 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
-import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/bitsdojo_window
@@ -21,26 +20,20 @@ import 'package:app/pages/home.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
   // Runs the app
   runApp(App(
     token: prefs.getString('token'),
   ));
 
-  //  Checks the device OS
-  if (DeviceCheck().isDesktop) {
-    // Desktop OS specific code
-    doWhenWindowReady(() {
-      // Defines the minimum dekstop window size
-      appWindow.minSize = const Size(1250, 650);
-      // Defines the desktop window title
-      appWindow.title = "Code Snippet Saver";
-    });
-  } else if (DeviceCheck().isMobile) {
-    // Mobile specific code
-  }
+  doWhenWindowReady(() {
+    // Defines the minimum dekstop window size
+    appWindow.minSize = const Size(1250, 650);
+    // Defines the desktop window title
+    appWindow.title = "Code Snippet Saver";
+  });
 }
 
-// ignore: must_be_immutable
 class App extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final token;

@@ -1,17 +1,10 @@
 /*
   * Utility imports
  */
-import 'dart:convert';
-import 'dart:developer';
+import 'package:app/services/reg.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
-import 'package:app/utils/device.checker.dart';
 import 'package:app/utils/app.routes.dart';
-import 'package:app/utils/http.routes.dart';
-// ? https://pub.dev/packages/email_validator
-import 'package:email_validator/email_validator.dart';
-// ? https://pub.dev/packages/http
-import 'package:http/http.dart' as http;
 
 /*
   * Page/component imports
@@ -32,51 +25,13 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  void signUpUser() async {
-    // Checks if the text fields are filled
-    if (_emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty &&
-        _confirmPasswordController.text.isNotEmpty) {
-      // Checks if the provided email is valid
-      if (EmailValidator.validate(_emailController.text) == true) {
-        // Checks if the provided passwords are valid
-        // ignore: unrelated_type_equality_checks
-        if (_passwordController.text == _confirmPasswordController.text) {
-          var regBody = {
-            "email": _emailController.text,
-            "password": _passwordController.text,
-          };
-
-          var response = await http.post(
-            Uri.parse(HttpRoutes.signUpUrl),
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode(regBody),
-          );
-
-          var jsonResponse = jsonDecode(response.body);
-
-          if (jsonResponse['status']) {
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushNamed(AppRoutes.signinRoute);
-          } else {
-            log('something went wrong');
-          }
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            // Uses the titlebar widget
-            Visibility(
-              visible: DeviceCheck().isDesktop,
-              child: const TitleBar(),
-            ),
+            const TitleBar(),
             Expanded(
               child: Container(
                 // Container style
@@ -157,7 +112,15 @@ class _SignUpState extends State<SignUp> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    signUpUser();
+                                    // Get the controller input as text
+                                    final String email = _emailController.text;
+                                    final String password =
+                                        _passwordController.text;
+                                    final String confirmPassword =
+                                        _confirmPasswordController.text;
+
+                                    RegService.signUpUser(context, email,
+                                        password, confirmPassword);
                                   },
                                   child: const Text("Sign Up"),
                                 ),

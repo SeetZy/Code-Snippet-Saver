@@ -3,6 +3,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:app/utils/app.routes.dart';
+import '../services/user.info.dart';
 // ? https://pub.dev/packages/jwt_decoder
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -21,30 +22,27 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static late String userId;
-
   @override
   void initState() {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-      userId = jwtDecodedToken['_id'];
+      UserInfo.userId = jwtDecodedToken['_id'];
+      UserInfo.email = jwtDecodedToken['email'];
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Baseplate(
+    return const Baseplate(
       title: 'Overview',
-      child: Content(email: userId),
+      child: Content(),
     );
   }
 }
 
 class Content extends StatelessWidget {
-  const Content({Key? key, required this.email}) : super(key: key);
-
-  final String email;
+  const Content({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,7 @@ class Content extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            "Welcome $email",
+            "Welcome ${UserInfo.userId}",
           ),
         ),
 
