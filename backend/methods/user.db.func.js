@@ -4,6 +4,7 @@
 // ? https://www.npmjs.com/package/jsonwebtoken
 const jwt = require('jsonwebtoken')
 
+// Gets the user model
 const UserModel = require('../models/user.model')
 
 class UserService {
@@ -33,7 +34,7 @@ class UserService {
 }
 
 // Defines functions object to be exported
-module.exports = functions = {
+module.exports = userDbFunc = {
   // Exporting the signUp function for user registration
   signUp: async (req, res, next) => {
     try {

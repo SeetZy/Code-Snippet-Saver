@@ -13,11 +13,12 @@ const bodyParser = require('body-parser')
 const connectDb = require('./db/db')
 const routes = require('./routes/router')
 
-// Loads all the data schemas in the database
-const userModel = require('./models/user.model')
-
 // Connects to MongoDb
 connectDb()
+
+// Loads all the data schemas in the database
+const UserModel = require('./models/user.model')
+const SnippetModel = require('./models/snippet.model')
 
 // Define a new app
 const app = express()

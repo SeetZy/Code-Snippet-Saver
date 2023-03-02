@@ -7,7 +7,8 @@ const express = require('express')
 // Defining a router
 const router = express.Router()
 
-const dbFunctions = require('../methods/db.func')
+const userDbFunc = require('../methods/user.db.func')
+const snippetDbFunc = require('../methods/snippet.db.func')
 
 // Default Route
 router.get('/', (req, res) => {
@@ -15,9 +16,12 @@ router.get('/', (req, res) => {
 })
 
 // Route to signup a new user
-router.post('/signup', dbFunctions.signUp)
+router.post('/signup', userDbFunc.signUp)
 
 // Route to signin a new user
-router.post('/signin', dbFunctions.signIn)
+router.post('/signin', userDbFunc.signIn)
+
+// Route to create a new code snippet
+router.post('/create-snippet', snippetDbFunc.createNewSnippet)
 
 module.exports = router
