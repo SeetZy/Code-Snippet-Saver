@@ -21,29 +21,17 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static late String email;
-  @override
-  void initState() {
-    super.initState();
-    if (widget.token != null) {
-      Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-      email = jwtDecodedToken['email'];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Baseplate(
-      title: 'Overview',
-      child: Content(email: email),
+    return const Baseplate(
+      title: 'Settings',
+      child: Content(),
     );
   }
 }
 
 class Content extends StatelessWidget {
-  const Content({super.key, required this.email});
-
-  final String email;
+  const Content({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +39,12 @@ class Content extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: const [
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               child: Text(
-                "Settings of $email",
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                "Settings of",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
             )
           ],

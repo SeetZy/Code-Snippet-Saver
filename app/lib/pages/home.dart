@@ -21,13 +21,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static late String email;
+  static late String userId;
+
   @override
   void initState() {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-      email = jwtDecodedToken['email'];
+      userId = jwtDecodedToken['_id'];
     }
   }
 
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Baseplate(
       title: 'Overview',
-      child: Content(email: email),
+      child: Content(email: userId),
     );
   }
 }
