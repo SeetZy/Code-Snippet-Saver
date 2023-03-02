@@ -48,9 +48,16 @@ class Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Center(
-          child: Text(
-            "Welcome ${UserInfo.userId}",
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: const [
+              Text(
+                'Snippet Overview',
+                style: TextStyle(fontSize: 25),
+              )
+            ],
           ),
         ),
 

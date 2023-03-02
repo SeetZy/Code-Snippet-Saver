@@ -20,10 +20,10 @@ class SaveSnippet extends StatelessWidget {
     // Pop-up widget content here
     return Container(
       color: GlobalVariables.secondaryColor,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: 300,
       child: Center(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.6,
+          width: 800,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,8 @@ class SaveSnippet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20),
                         // File name text input field
                         child: SizedBox(
                           width: 300,
@@ -59,7 +60,8 @@ class SaveSnippet extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 20),
                           // File name text input field
                           child: SizedBox(
                             width: 300,
