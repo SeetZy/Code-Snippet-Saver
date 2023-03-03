@@ -1,13 +1,14 @@
 const SnippetModel = require('../models/snippet.model')
 
 class SnippetService {
-  static async createSnippet(userId, fileName, fileType, snippet) {
+  static async createSnippet(userId, fileName, fileType, snippet, description) {
     try {
       const createSnippet = new SnippetModel({
         userId,
         fileName,
         fileType,
         snippet,
+        description,
       })
       return await createSnippet.save()
     } catch (error) {
@@ -19,13 +20,14 @@ class SnippetService {
 module.exports = snippetDbFunc = {
   createNewSnippet: async (req, res, next) => {
     try {
-      const { userId, fileName, fileType, snippet } = req.body
+      const { userId, fileName, fileType, snippet, description } = req.body
 
       let codeSnippet = await SnippetService.createSnippet(
         userId,
         fileName,
         fileType,
-        snippet
+        snippet,
+        description
       )
 
       res.json({ status: true, success: codeSnippet })

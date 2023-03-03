@@ -28,6 +28,10 @@ const snippetSchema = new Schema({
     type: String,
     require: true,
   },
+  description: {
+    type: String,
+    require: true,
+  },
 })
 
 module.exports = mongoose.model('snippets', snippetSchema)
