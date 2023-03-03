@@ -18,6 +18,9 @@ class _SaveSnippetState extends State<SaveSnippet> {
   // Controllers
   static final TextEditingController _fileNameController =
       TextEditingController();
+  // Controllers
+  static final TextEditingController _descriptionController =
+      TextEditingController();
 
   static final List<String> progLang = [
     'py',
@@ -40,6 +43,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _fileNameController.clear();
+      _descriptionController.clear();
     });
   }
 
@@ -71,47 +75,73 @@ class _SaveSnippetState extends State<SaveSnippet> {
                 children: [
                   // Snippet info
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // File name
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 20),
-                        // File name text input field
-                        child: SizedBox(
-                          width: 300,
-                          child: TextField(
-                            controller: _fileNameController,
-                            decoration: const InputDecoration(
-                              hintText: "File name e.g. main.py",
-                              border: OutlineInputBorder(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // File name
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            // File name text input field
+                            child: SizedBox(
+                              width: 300,
+                              child: TextField(
+                                controller: _fileNameController,
+                                decoration: const InputDecoration(
+                                  hintText: "File name e.g. main.py",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+
+                          // File type
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            // File name text input field
+                            child: DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              iconSize: 24,
+                              items: progLang
+                                  .map<DropdownMenuItem<String>>(
+                                    (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
 
-                      // File type
+                      // Code snippet description
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 20),
-                        // File name text input field
-                        child: DropdownButton<String>(
-                          value: dropdownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          iconSize: 24,
-                          items: progLang
-                              .map<DropdownMenuItem<String>>(
-                                (String value) => DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                            });
-                          },
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: SizedBox(
+                          width: 400,
+                          height: 100,
+                          child: TextField(
+                            expands: true,
+                            maxLines: null,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText:
+                                  'Code snippet description', // add this line
+                              contentPadding: EdgeInsets.all(16.0),
+                            ),
+                            style: const TextStyle(fontSize: 16.0),
+                            controller: _descriptionController,
+                            keyboardType: TextInputType.multiline,
+                            textAlignVertical: TextAlignVertical.top,
+                          ),
                         ),
                       ),
                     ],
@@ -131,9 +161,11 @@ class _SaveSnippetState extends State<SaveSnippet> {
                             final String fileType = dropdownValue;
                             final String snippet =
                                 widget.snippetController.text;
+                            final String description =
+                                _descriptionController.text;
 
-                            SaveCodeSnippet.saveCodeSnippet(
-                                context, fileName, fileType, snippet);
+                            SaveCodeSnippet.saveCodeSnippet(context, fileName,
+                                fileType, snippet, description);
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: GlobalVariables.accentColor2),

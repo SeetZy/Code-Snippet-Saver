@@ -73,7 +73,7 @@ class _ContentState extends State<Content> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const Text(
-              "Note: Syntax highlighting might not work for all languages",
+              "Note: Syntax highlighting might not work for all languages & on page reload all inputted text dissapears",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Expanded(

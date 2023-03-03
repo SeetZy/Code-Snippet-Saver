@@ -12,13 +12,17 @@ import 'package:http/http.dart' as http;
 class SaveCodeSnippet {
   // Checks if the code snippet data is empty or not
   static saveCodeSnippet(
-      BuildContext context, fileName, fileType, snippet) async {
-    if (fileName.isNotEmpty && fileType.isNotEmpty && snippet.isNotEmpty) {
+      BuildContext context, fileName, fileType, snippet, description) async {
+    if (fileName.isNotEmpty &&
+        fileType.isNotEmpty &&
+        snippet.isNotEmpty &&
+        description.isNotEmpty) {
       var regBody = {
         "userId": UserInfo.userId,
         "fileName": fileName,
         "fileType": fileType,
         "snippet": snippet,
+        "description": description
       };
 
       var response = await http.post(
