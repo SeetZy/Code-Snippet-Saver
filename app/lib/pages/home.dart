@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import '../utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 import '../services/user.info.dart';
 // ? https://pub.dev/packages/jwt_decoder
@@ -55,7 +56,10 @@ class Content extends StatelessWidget {
             children: const [
               Text(
                 'Snippet Overview',
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(
+                    fontSize: 25,
+                    color: GlobalVariables.accentColor4,
+                    fontWeight: FontWeight.w600),
               )
             ],
           ),
@@ -66,7 +70,6 @@ class Content extends StatelessWidget {
           right: 16,
           bottom: 16,
           child: FloatingActionButton.extended(
-            elevation: 0,
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.addRoute);
             },

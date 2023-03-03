@@ -41,7 +41,10 @@ class Content extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Text(
                 "Settings of ${UserInfo.email}",
-                style: const TextStyle(fontSize: 25),
+                style: const TextStyle(
+                    fontSize: 25,
+                    color: GlobalVariables.accentColor4,
+                    fontWeight: FontWeight.w600),
               ),
             )
           ],
@@ -53,7 +56,6 @@ class Content extends StatelessWidget {
           bottom: 16,
           child: FloatingActionButton.extended(
             backgroundColor: GlobalVariables.accentColor3,
-            elevation: 0,
             onPressed: () {},
             label: const Text(
               "Logout",

@@ -2,18 +2,46 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import '../utils/global.vars.dart';
 import '../services/snippet.service.dart';
 
-class SaveSnippet extends StatelessWidget {
+class SaveSnippet extends StatefulWidget {
   const SaveSnippet({super.key, required this.snippetController});
+  final TextEditingController snippetController;
 
+  @override
+  State<SaveSnippet> createState() => _SaveSnippetState();
+}
+
+class _SaveSnippetState extends State<SaveSnippet> {
   // Controllers
   static final TextEditingController _fileNameController =
       TextEditingController();
-  static final TextEditingController _fileTypeController =
-      TextEditingController();
-  final TextEditingController snippetController;
+
+  static final List<String> progLang = [
+    'py',
+    'dart',
+    'js',
+    'ts',
+    'cpp',
+    'cs',
+    'php',
+    'css',
+    'html',
+    'json'
+  ];
+
+  static String dropdownValue = 'py';
+
+  // Clears the input field on reload
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _fileNameController.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +69,11 @@ class SaveSnippet extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Snippet info
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // File name
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 20),
@@ -59,52 +89,105 @@ class SaveSnippet extends StatelessWidget {
                           ),
                         ),
                       ),
+
+                      // File type
                       Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, bottom: 20),
-                          // File name text input field
-                          child: SizedBox(
-                            width: 300,
-                            child: TextField(
-                              controller: _fileTypeController,
-                              decoration: const InputDecoration(
-                                hintText: "File type e.g. python",
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          )),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20),
+                        // File name text input field
+                        child: DropdownButton<String>(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          items: progLang
+                              .map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                        ),
+                      ),
                     ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Get the controller input as text
-                      final String fileName = _fileNameController.text;
-                      final String fileType = _fileTypeController.text;
-                      final String snippet = snippetController.text;
 
-                      SaveCodeSnippet.saveCodeSnippet(
-                          fileName, fileType, snippet);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: GlobalVariables.accentColor2),
-                    child: SizedBox(
-                      width: 120,
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.save,
-                            color: Colors.white,
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Button to save the snippet
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Get the controller input as text
+                            final String fileName = _fileNameController.text;
+                            final String fileType = dropdownValue;
+                            final String snippet =
+                                widget.snippetController.text;
+
+                            SaveCodeSnippet.saveCodeSnippet(
+                                context, fileName, fileType, snippet);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: GlobalVariables.accentColor2),
+                          child: SizedBox(
+                            width: 120,
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.save,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  ' Save Snippet',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            ' Save Snippet',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+
+                      // Button to close the menu
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: GlobalVariables.accentColor3),
+                          child: SizedBox(
+                            width: 80,
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  ' Close',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )

@@ -13,7 +13,8 @@ class CodeEditor extends StatelessWidget {
 
   // Defines default code in hint text
   static final List<String> defaultCode = [
-    '# Default code',
+    '# Example code',
+    '',
     'class Car:',
     '\tdef __init__(self, make, model):',
     '\t\tself.make = make>',

@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:app/utils/global.vars.dart';
 
 /*
@@ -38,6 +39,15 @@ class Content extends StatefulWidget {
 class _ContentState extends State<Content> {
   static final TextEditingController _snippetController =
       TextEditingController();
+
+  // Clears the input field on reload
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _snippetController.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
