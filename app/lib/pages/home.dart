@@ -45,15 +45,13 @@ class _HomeState extends State<Home> {
 
   void getSnippets(userId) async {
     try {
-      var regBody = {"userId": userId};
-
-      var response = await http.post(Uri.parse(HttpRoutes.getUserSnippets),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(regBody));
-
+      var url =
+          Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}');
+      var response =
+          await http.get(url, headers: {"Content-Type": "application/json"});
+      print(response.body);
       var jsonResponse = jsonDecode(response.body);
       snippets = jsonResponse['success'];
-
       setState(() {});
     } catch (error) {
       log('An error occurred whilst doing a HTTP request: $error');

@@ -43,7 +43,7 @@ module.exports = snippetDbFunc = {
 
   getUserSnippets: async (req, res, next) => {
     try {
-      const { userId } = req.body
+      const { userId } = req.query
 
       let snippets = await SnippetService.getSnippets(userId)
 
