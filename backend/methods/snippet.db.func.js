@@ -19,7 +19,7 @@ class SnippetService {
   static async getSnippetData(userId) {
     try {
       const snippetData = await SnippetModel.find({ userId })
-      return { success: snippetData } // Return an object with a "success" property containing the snippet data
+      return snippetData
     } catch (error) {
       throw new Error(`Didn't find any data: ${error.message}`)
     }
