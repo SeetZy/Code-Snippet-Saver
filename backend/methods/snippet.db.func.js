@@ -15,6 +15,15 @@ class SnippetService {
       throw new Error(`Failed to save code snippet: ${error.message}`)
     }
   }
+
+  static async getSnippetData(userId) {
+    try {
+      const snippetData = await SnippetModel.find({ userId })
+      return snippetData
+    } catch (error) {
+      throw new Error(`Didn't find any data: ${error.message}`)
+    }
+  }
 }
 
 module.exports = snippetDbFunc = {
@@ -29,6 +38,17 @@ module.exports = snippetDbFunc = {
         snippet,
         description
       )
+
+      res.json({ status: true, success: codeSnippet })
+    } catch (error) {
+      next(error)
+    }
+  },
+  getUserSnippets: async (req, res, next) => {
+    try {
+      const { userId } = req.body
+
+      let codeSnippet = await SnippetService.getSnippetData(userId)
 
       res.json({ status: true, success: codeSnippet })
     } catch (error) {
