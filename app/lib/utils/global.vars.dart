@@ -12,4 +12,5 @@ class GlobalVariables {
 
   static const primaryColor = Color(0xFF110e25);
   static const secondaryColor = Color(0xFF2e3152);
+  static const secondaryColor2 = Color(0xFF404472);
 }

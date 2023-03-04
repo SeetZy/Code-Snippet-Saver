@@ -5,6 +5,7 @@
  */
 import 'dart:convert';
 import 'dart:developer';
+import 'package:app/components/show.snippets.dart';
 import 'package:flutter/material.dart';
 import '../services/user.info.dart';
 import '../utils/global.vars.dart';
@@ -30,8 +31,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static List? snippets;
-
   @override
   void initState() {
     super.initState();
@@ -45,13 +44,13 @@ class _HomeState extends State<Home> {
 
   void getSnippets(userId) async {
     try {
-      var url =
-          Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}');
-      var response =
-          await http.get(url, headers: {"Content-Type": "application/json"});
-      print(response.body);
+      var response = await http.get(
+          Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}'),
+          headers: {"Content-Type": "application/json"});
+
       var jsonResponse = jsonDecode(response.body);
-      snippets = jsonResponse['success'];
+
+      UserInfo.snippets = jsonResponse['success'];
       setState(() {});
     } catch (error) {
       log('An error occurred whilst doing a HTTP request: $error');
@@ -66,8 +65,8 @@ class _HomeState extends State<Home> {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Padding(
+            children: const [
+              Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: Text(
                   'Snippet Overview',
@@ -77,25 +76,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                // child: snippets == null
-                //     ? const SizedBox()
-                //     : ListView.builder(
-                //         shrinkWrap: true,
-                //         itemCount: snippets!.length,
-                //         itemBuilder: (context, int index) {
-                //           return Card(
-                //             borderOnForeground: false,
-                //             child: ListTile(
-                //               leading: const Icon(Icons.task),
-                //               title: Text('${snippets![index]['fileName']}'),
-                //               subtitle: Text('${snippets![index]['desc']}'),
-                //             ),
-                //           );
-                //         },
-                //       ),
-              ),
+              ShowSnippets(),
             ],
           ),
 
