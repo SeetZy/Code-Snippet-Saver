@@ -4,8 +4,9 @@
 // ? https://www.npmjs.com/package/jsonwebtoken
 const jwt = require('jsonwebtoken')
 
-// Gets the user model
+// Gets the data models
 const UserModel = require('../models/user.model')
+const BlacklistedToken = require('../models/blacklisted.tokens.model')
 
 class UserService {
   // Method for registering a new user
@@ -29,7 +30,12 @@ class UserService {
 
   // Method for generating a JWT token
   static async generateToken(tokenData, secretKey, jwtExpire) {
-    return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
+    const token = jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
+    const blacklistedToken = await BlacklistedToken.findOne({ token })
+    if (blacklistedToken) {
+      throw new Error('Token has been blacklisted')
+    }
+    return token
   }
 }
 
@@ -59,6 +65,7 @@ module.exports = userDbFunc = {
       res.status(500).json({ status: false, error: 'Failed to register user' })
     }
   },
+
   // Exporting the signIn function for user authentication
   signIn: async (req, res, next) => {
     try {
@@ -100,6 +107,23 @@ module.exports = userDbFunc = {
     } catch (error) {
       console.error(error.message)
       res.status(500).json({ status: false, error: 'Failed to login' })
+    }
+  },
+
+  logout: async (req, res, next) => {
+    try {
+      const authHeader = req.headers.authorization
+      if (!authHeader) {
+        return res
+          .status(401)
+          .json({ status: false, error: 'Authorization header is missing' })
+      }
+      const token = authHeader.split(' ')[1] // Extracts the token from the Authorization header
+      await BlacklistedToken.create({ token })
+      res.json({ status: true, message: 'Logged out successfully' })
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).json({ status: false, error: 'Failed to logout' })
     }
   },
 }

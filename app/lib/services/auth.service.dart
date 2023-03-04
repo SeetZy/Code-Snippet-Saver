@@ -62,4 +62,22 @@ class AuthService {
       }
     }
   }
+
+  static logout(token) async {
+    try {
+      var response = await http.post(
+        Uri.parse(HttpRoutes.signInUrl),
+        headers: {
+          "Content-Type": "application/json",
+          // ignore: prefer_interpolation_to_compose_strings
+          "Authorization": "Bearer " + token
+        },
+      );
+
+      var jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } catch (error) {
+      log('Error: $error');
+    }
+  }
 }

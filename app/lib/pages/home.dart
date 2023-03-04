@@ -36,10 +36,18 @@ class _HomeState extends State<Home> {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+      UserInfo.token = widget.token;
       UserInfo.userId = jwtDecodedToken['_id'];
       UserInfo.email = jwtDecodedToken['email'];
       getSnippets(UserInfo.userId);
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reload data when page is reloaded
+    getSnippets(UserInfo.userId);
   }
 
   void getSnippets(userId) async {

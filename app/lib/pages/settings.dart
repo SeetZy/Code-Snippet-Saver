@@ -1,6 +1,7 @@
 /*
   * Utility imports
  */
+import 'package:app/services/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import '../services/user.info.dart';
@@ -56,7 +57,9 @@ class Content extends StatelessWidget {
           bottom: 16,
           child: FloatingActionButton.extended(
             backgroundColor: GlobalVariables.accentColor3,
-            onPressed: () {},
+            onPressed: () {
+              AuthService.logout(UserInfo.token);
+            },
             label: const Text(
               "Logout",
               style: TextStyle(color: Colors.white),
