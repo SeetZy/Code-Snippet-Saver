@@ -16,13 +16,9 @@ class SnippetService {
     }
   }
 
-  static async getSnippetData(userId) {
-    try {
-      const snippetData = await SnippetModel.find({ userId })
-      return snippetData
-    } catch (error) {
-      throw new Error(`Didn't find any data: ${error.message}`)
-    }
+  static async getSnippets(userId) {
+    const snippetData = await SnippetModel.find({ userId })
+    return snippetData
   }
 }
 
@@ -44,13 +40,14 @@ module.exports = snippetDbFunc = {
       next(error)
     }
   },
+
   getUserSnippets: async (req, res, next) => {
     try {
       const { userId } = req.body
 
-      let codeSnippet = await SnippetService.getSnippetData(userId)
+      let snippets = await SnippetService.getSnippets(userId)
 
-      res.json({ status: true, success: codeSnippet })
+      res.json({ status: true, success: snippets })
     } catch (error) {
       next(error)
     }

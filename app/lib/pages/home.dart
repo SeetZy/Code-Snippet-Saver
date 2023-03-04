@@ -31,6 +31,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static List? snippets;
+
   @override
   void initState() {
     super.initState();
@@ -38,28 +39,24 @@ class _HomeState extends State<Home> {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
       UserInfo.userId = jwtDecodedToken['_id'];
       UserInfo.email = jwtDecodedToken['email'];
+      getSnippets(UserInfo.userId);
     }
-    getSnippets();
   }
 
-  void getSnippets() async {
+  void getSnippets(userId) async {
     try {
-      var regBody = {
-        "userId": UserInfo.userId,
-      };
+      var regBody = {"userId": userId};
 
-      var response = await http.post(
-        Uri.parse(HttpRoutes.getUserSnippets),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(regBody),
-      );
+      var response = await http.post(Uri.parse(HttpRoutes.getUserSnippets),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(regBody));
 
       var jsonResponse = jsonDecode(response.body);
       snippets = jsonResponse['success'];
 
       setState(() {});
     } catch (error) {
-      log('Error occurred during HTTP request: $error');
+      log('An error occurred whilst doing a HTTP request: $error');
     }
   }
 
@@ -84,22 +81,22 @@ class _HomeState extends State<Home> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: snippets == null
-                    ? const SizedBox()
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snippets!.length,
-                        itemBuilder: (context, int index) {
-                          return Card(
-                            borderOnForeground: false,
-                            child: ListTile(
-                              leading: const Icon(Icons.task),
-                              title: Text('${snippets![index]['fileName']}'),
-                              subtitle: Text('${snippets![index]['desc']}'),
-                            ),
-                          );
-                        },
-                      ),
+                // child: snippets == null
+                //     ? const SizedBox()
+                //     : ListView.builder(
+                //         shrinkWrap: true,
+                //         itemCount: snippets!.length,
+                //         itemBuilder: (context, int index) {
+                //           return Card(
+                //             borderOnForeground: false,
+                //             child: ListTile(
+                //               leading: const Icon(Icons.task),
+                //               title: Text('${snippets![index]['fileName']}'),
+                //               subtitle: Text('${snippets![index]['desc']}'),
+                //             ),
+                //           );
+                //         },
+                //       ),
               ),
             ],
           ),
