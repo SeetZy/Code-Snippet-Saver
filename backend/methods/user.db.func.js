@@ -27,16 +27,6 @@ class UserService {
       throw new Error(`Failed to check user: ${error.message}`)
     }
   }
-
-  // Method for generating a JWT token
-  static async generateToken(tokenData, secretKey, jwtExpire) {
-    const token = jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
-    const blacklistedToken = await BlacklistedToken.findOne({ token })
-    if (blacklistedToken) {
-      throw new Error('Token has been blacklisted')
-    }
-    return token
-  }
 }
 
 // Defines functions object to be exported
@@ -107,23 +97,6 @@ module.exports = userDbFunc = {
     } catch (error) {
       console.error(error.message)
       res.status(500).json({ status: false, error: 'Failed to login' })
-    }
-  },
-
-  logout: async (req, res, next) => {
-    try {
-      const authHeader = req.headers.authorization
-      if (!authHeader) {
-        return res
-          .status(401)
-          .json({ status: false, error: 'Authorization header is missing' })
-      }
-      const token = authHeader.split(' ')[1] // Extracts the token from the Authorization header
-      await BlacklistedToken.create({ token })
-      res.json({ status: true, message: 'Logged out successfully' })
-    } catch (error) {
-      console.error(error.message)
-      res.status(500).json({ status: false, error: 'Failed to logout' })
     }
   },
 }

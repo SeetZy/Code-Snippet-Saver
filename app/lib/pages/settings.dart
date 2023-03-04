@@ -58,7 +58,7 @@ class Content extends StatelessWidget {
           child: FloatingActionButton.extended(
             backgroundColor: GlobalVariables.accentColor3,
             onPressed: () {
-              AuthService.logout(UserInfo.token);
+              AuthService.logout(context);
             },
             label: const Text(
               "Logout",

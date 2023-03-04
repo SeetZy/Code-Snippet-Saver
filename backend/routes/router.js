@@ -21,9 +21,6 @@ router.post('/signup', userDbFunc.signUp)
 // Route to signin a new user
 router.post('/signin', userDbFunc.signIn)
 
-// Route to logout a user
-router.post('/logout', userDbFunc.logout)
-
 // Route to create a new code snippet
 router.post('/create-snippet', snippetDbFunc.createNewSnippet)
 

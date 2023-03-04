@@ -3,6 +3,7 @@
  */
 import 'dart:convert';
 import 'dart:developer';
+import 'package:app/utils/app.routes.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
@@ -63,21 +64,13 @@ class AuthService {
     }
   }
 
-  static logout(token) async {
-    try {
-      var response = await http.post(
-        Uri.parse(HttpRoutes.signInUrl),
-        headers: {
-          "Content-Type": "application/json",
-          // ignore: prefer_interpolation_to_compose_strings
-          "Authorization": "Bearer " + token
-        },
-      );
+  static logout(BuildContext context) async {
+    // Clear the token from storage
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
 
-      var jsonResponse = jsonDecode(response.body);
-      return jsonResponse;
-    } catch (error) {
-      log('Error: $error');
-    }
+    // Navigate to the login screen
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacementNamed(context, '/signin');
   }
 }
