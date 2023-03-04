@@ -27,33 +27,37 @@ class AuthService {
   static signInUser(BuildContext context, email, password) async {
     if (email.isNotEmpty && password.isNotEmpty) {
       if (EmailValidator.validate(email) == true) {
-        var regBody = {
-          "email": email,
-          "password": password,
-        };
+        try {
+          var regBody = {
+            "email": email,
+            "password": password,
+          };
 
-        var response = await http.post(
-          Uri.parse(HttpRoutes.signInUrl),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(regBody),
-        );
-
-        var jsonResponse = jsonDecode(response.body);
-
-        if (jsonResponse['status']) {
-          var token = jsonResponse['token'];
-          prefs.setString('token', token);
-          // ignore: use_build_context_synchronously
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Home(
-                token: token,
-              ),
-            ),
+          var response = await http.post(
+            Uri.parse(HttpRoutes.signInUrl),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(regBody),
           );
-        } else {
-          log('something went wrong');
+
+          var jsonResponse = jsonDecode(response.body);
+
+          if (jsonResponse['status']) {
+            var token = jsonResponse['token'];
+            prefs.setString('token', token);
+            // ignore: use_build_context_synchronously
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Home(
+                  token: token,
+                ),
+              ),
+            );
+          } else {
+            log('something went wrong');
+          }
+        } catch (error) {
+          log('Error occurred duting HTTP request: $error');
         }
       }
     }

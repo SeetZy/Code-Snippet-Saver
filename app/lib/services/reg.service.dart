@@ -21,24 +21,28 @@ class RegService {
         // Checks if the provided passwords are valid
         // ignore: unrelated_type_equality_checks
         if (password == confirmPassword) {
-          var regBody = {
-            "email": email,
-            "password": password,
-          };
+          try {
+            var regBody = {
+              "email": email,
+              "password": password,
+            };
 
-          var response = await http.post(
-            Uri.parse(HttpRoutes.signUpUrl),
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode(regBody),
-          );
+            var response = await http.post(
+              Uri.parse(HttpRoutes.signUpUrl),
+              headers: {"Content-Type": "application/json"},
+              body: jsonEncode(regBody),
+            );
 
-          var jsonResponse = jsonDecode(response.body);
+            var jsonResponse = jsonDecode(response.body);
 
-          if (jsonResponse['status']) {
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushNamed(AppRoutes.signinRoute);
-          } else {
-            log('something went wrong');
+            if (jsonResponse['status']) {
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).pushNamed(AppRoutes.signinRoute);
+            } else {
+              log('something went wrong');
+            }
+          } catch (error) {
+            log('Error occurred duting HTTP request: $error');
           }
         }
       }

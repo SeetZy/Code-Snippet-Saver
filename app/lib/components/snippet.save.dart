@@ -164,7 +164,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
                             final String description =
                                 _descriptionController.text;
 
-                            SaveCodeSnippet.saveCodeSnippet(context, fileName,
+                            SnippetService.saveCodeSnippet(context, fileName,
                                 fileType, snippet, description);
                           },
                           style: ElevatedButton.styleFrom(
