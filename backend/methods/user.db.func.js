@@ -4,9 +4,8 @@
 // ? https://www.npmjs.com/package/jsonwebtoken
 const jwt = require('jsonwebtoken')
 
-// Gets the data models
+// Gets the user model
 const UserModel = require('../models/user.model')
-const BlacklistedToken = require('../models/blacklisted.tokens.model')
 
 class UserService {
   // Method for registering a new user
@@ -26,6 +25,11 @@ class UserService {
     } catch (error) {
       throw new Error(`Failed to check user: ${error.message}`)
     }
+  }
+
+  // Method for generating a JWT token
+  static async generateToken(tokenData, secretKey, jwtExpire) {
+    return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
 }
 
@@ -55,7 +59,6 @@ module.exports = userDbFunc = {
       res.status(500).json({ status: false, error: 'Failed to register user' })
     }
   },
-
   // Exporting the signIn function for user authentication
   signIn: async (req, res, next) => {
     try {

@@ -3,7 +3,6 @@
  */
 import 'dart:convert';
 import 'dart:developer';
-import 'package:app/utils/app.routes.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
@@ -58,19 +57,9 @@ class AuthService {
             log('something went wrong');
           }
         } catch (error) {
-          log('Error occurred duting HTTP request: $error');
+          log('Error occurred during HTTP request: $error');
         }
       }
     }
-  }
-
-  static logout(BuildContext context) async {
-    // Clear the token from storage
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-
-    // Navigate to the login screen
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, '/signin');
   }
 }
