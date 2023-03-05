@@ -62,4 +62,14 @@ class AuthService {
       }
     }
   }
+
+  static logout(BuildContext context) async {
+    // Clear the token from storage
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    // Navigate to the login screen
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacementNamed(context, '/signin');
+  }
 }
