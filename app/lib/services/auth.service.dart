@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
   * Page/component imports
  */
 import '../pages/home.dart';
+import '../utils/global.vars.dart';
 
 class AuthService {
   static late SharedPreferences prefs;
@@ -53,13 +54,82 @@ class AuthService {
                 ),
               ),
             );
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'User has signed in successfully',
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: GlobalVariables.accentColor2,
+                action: SnackBarAction(
+                  label: 'x',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    // code to be executed when the user dismisses the SnackBar
+                  },
+                ),
+              ),
+            );
           } else {
-            log('something went wrong');
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'Please check the email and password',
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: GlobalVariables.accentColor3,
+                action: SnackBarAction(
+                  label: 'x',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    // code to be executed when the user dismisses the SnackBar
+                  },
+                ),
+              ),
+            );
           }
         } catch (error) {
           log('Error occurred during HTTP request: $error');
         }
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Please provide a valid email',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: GlobalVariables.accentColor3,
+            action: SnackBarAction(
+              label: 'x',
+              textColor: Colors.white,
+              onPressed: () {
+                // code to be executed when the user dismisses the SnackBar
+              },
+            ),
+          ),
+        );
       }
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please fill all the fields',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: GlobalVariables.accentColor3,
+          action: SnackBarAction(
+            label: 'x',
+            textColor: Colors.white,
+            onPressed: () {
+              // code to be executed when the user dismisses the SnackBar
+            },
+          ),
+        ),
+      );
     }
   }
 
@@ -71,5 +141,22 @@ class AuthService {
     // Navigate to the login screen
     // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, '/signin');
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text(
+          'Successfully signed out',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: GlobalVariables.accentColor2,
+        action: SnackBarAction(
+          label: 'x',
+          textColor: Colors.white,
+          onPressed: () {
+            // code to be executed when the user dismisses the SnackBar
+          },
+        ),
+      ),
+    );
   }
 }

@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/http.routes.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/email_validator
@@ -38,14 +39,101 @@ class RegService {
             if (jsonResponse['status']) {
               // ignore: use_build_context_synchronously
               Navigator.of(context).pushNamed(AppRoutes.signinRoute);
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text(
+                    'User created successfully',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: GlobalVariables.accentColor2,
+                  action: SnackBarAction(
+                    label: 'x',
+                    textColor: Colors.white,
+                    onPressed: () {
+                      // code to be executed when the user dismisses the SnackBar
+                    },
+                  ),
+                ),
+              );
             } else {
-              log('something went wrong');
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text(
+                    'A user with this email already exists',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: GlobalVariables.accentColor3,
+                  action: SnackBarAction(
+                    label: 'x',
+                    textColor: Colors.white,
+                    onPressed: () {
+                      // code to be executed when the user dismisses the SnackBar
+                    },
+                  ),
+                ),
+              );
             }
           } catch (error) {
             log('Error occurred duting HTTP request: $error');
           }
+        } else {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'The passwords do not match',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: GlobalVariables.accentColor3,
+              action: SnackBarAction(
+                label: 'x',
+                textColor: Colors.white,
+                onPressed: () {
+                  // code to be executed when the user dismisses the SnackBar
+                },
+              ),
+            ),
+          );
         }
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Please provide a valid email',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: GlobalVariables.accentColor3,
+            action: SnackBarAction(
+              label: 'x',
+              textColor: Colors.white,
+              onPressed: () {
+                // code to be executed when the user dismisses the SnackBar
+              },
+            ),
+          ),
+        );
       }
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please fill all the fields',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: GlobalVariables.accentColor3,
+          action: SnackBarAction(
+            label: 'x',
+            textColor: Colors.white,
+            onPressed: () {
+              // code to be executed when the user dismisses the SnackBar
+            },
+          ),
+        ),
+      );
     }
   }
 }

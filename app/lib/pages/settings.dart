@@ -25,20 +25,27 @@ class _SettingsState extends State<Settings> {
       title: 'Settings',
       child: Stack(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  "Settings of ${UserInfo.email}",
-                  style: const TextStyle(
-                      fontSize: 25,
-                      color: GlobalVariables.accentColor4,
-                      fontWeight: FontWeight.w600),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 25),
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: GlobalVariables.accentColor4,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
-              )
-            ],
+                Text(
+                  'Email: ${UserInfo.email}',
+                  style: const TextStyle(fontSize: 15),
+                )
+              ],
+            ),
           ),
 
           // Button to add new snippets

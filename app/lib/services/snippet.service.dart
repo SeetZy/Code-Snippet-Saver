@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/services/user.info.dart';
 import '../utils/http.routes.dart';
 // ? https://pub.dev/packages/http
@@ -35,15 +36,65 @@ class SnippetService {
         var jsonResponse = jsonDecode(response.body);
 
         if (jsonResponse['status']) {
-          log('Added the code snippet');
           // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Successfully added a code snippet',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: GlobalVariables.accentColor2,
+              action: SnackBarAction(
+                label: 'x',
+                textColor: Colors.white,
+                onPressed: () {
+                  // code to be executed when the user dismisses the SnackBar
+                },
+              ),
+            ),
+          );
         } else {
-          log('something went wrong');
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Something went wrong',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: GlobalVariables.accentColor3,
+              action: SnackBarAction(
+                label: 'x',
+                textColor: Colors.white,
+                onPressed: () {
+                  // code to be executed when the user dismisses the SnackBar
+                },
+              ),
+            ),
+          );
         }
       } catch (error) {
         log('Error occurred duting HTTP request: $error');
       }
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please fill all the fields',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: GlobalVariables.accentColor3,
+          action: SnackBarAction(
+            label: 'x',
+            textColor: Colors.white,
+            onPressed: () {
+              // code to be executed when the user dismisses the SnackBar
+            },
+          ),
+        ),
+      );
     }
   }
 }
