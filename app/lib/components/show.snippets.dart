@@ -143,7 +143,15 @@ class ShowSnippets extends StatelessWidget {
                                             padding: const EdgeInsets.only(
                                                 left: 5, right: 5),
                                             child: ElevatedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                SnippetService.updateSnippet(
+                                                  context,
+                                                  UserInfo.snippets![index]
+                                                      ['_id'],
+                                                  _snippetController.text,
+                                                  _descriptionController.text,
+                                                );
+                                              },
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       GlobalVariables

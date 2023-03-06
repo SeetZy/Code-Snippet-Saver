@@ -5,6 +5,8 @@ class HttpRoutes {
       'https://shielded-river-62504.herokuapp.com/create-snippet';
   static const getUserSnippets =
       'https://shielded-river-62504.herokuapp.com/get-user-snippets';
-  static const deleteSnippets =
+  static const updateUserSnippets =
+      'https://shielded-river-62504.herokuapp.com/update-snippets';
+  static const deleteUserSnippets =
       'https://shielded-river-62504.herokuapp.com/delete-snippets';
 }
