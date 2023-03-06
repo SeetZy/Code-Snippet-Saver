@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:app/services/auth.service.dart';
+import 'package:app/services/del.user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import '../services/user.info.dart';
@@ -58,7 +59,9 @@ class _SettingsState extends State<Settings> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      DelUser.deleteUser(context, UserInfo.userId);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: GlobalVariables.accentColor3,
                     ),

@@ -4,8 +4,9 @@
 // ? https://www.npmjs.com/package/jsonwebtoken
 const jwt = require('jsonwebtoken')
 
-// Gets the user model
+// Gets the data models
 const UserModel = require('../models/user.model')
+const SnippetModel = require('../models/snippet.model')
 
 class UserService {
   // Method for registering a new user
@@ -34,7 +35,10 @@ class UserService {
 
   static async deleteUser(id) {
     const deletedUserData = await UserModel.findOneAndDelete({ _id: id })
-    return deletedUserData
+    const deletedUserSnippets = await SnippetModel.deleteMany({
+      userId: id,
+    })
+    return deletedUserSnippets, deletedUserData
   }
 }
 
