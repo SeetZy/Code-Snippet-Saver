@@ -25,6 +25,8 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _obscureText = true;
+
   @override
   void initState() {
     super.initState();
@@ -95,12 +97,25 @@ class _SignInState extends State<SignIn> {
                         ),
 
                         // Password text input field
-                        TextField(
-                          obscureText: true,
+                        TextFormField(
+                          obscureText: _obscureText,
                           controller: _passwordController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Password",
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(

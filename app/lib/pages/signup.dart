@@ -27,6 +27,9 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  bool _obscureText = true;
+  bool _obscureText2 = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,12 +94,25 @@ class _SignUpState extends State<SignUp> {
                         ),
 
                         // Password text input field
-                        TextField(
-                          obscureText: true,
+                        TextFormField(
+                          obscureText: _obscureText,
                           controller: _passwordController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Password",
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -104,12 +120,25 @@ class _SignUpState extends State<SignUp> {
                         ),
 
                         // Confirm password text input field
-                        TextField(
-                          obscureText: true,
+                        TextFormField(
+                          obscureText: _obscureText2,
                           controller: _confirmPasswordController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Confirm Password",
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText2
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText2 = !_obscureText2;
+                                });
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(
