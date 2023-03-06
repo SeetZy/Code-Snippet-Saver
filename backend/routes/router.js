@@ -29,7 +29,7 @@ router.post('/create-snippet', snippetDbFunc.createNewSnippet)
 router.get('/get-user-snippets', snippetDbFunc.getUserSnippets)
 
 // ROute to update users snippets
-router.post('/update-snippets')
+router.put('/update-snippets/:id', snippetDbFunc.updateUserSnippets)
 
 // Route to delete users snippets
 router.post('/delete-snippets', snippetDbFunc.deleteUserSnippets)

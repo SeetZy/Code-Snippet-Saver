@@ -21,6 +21,15 @@ class SnippetService {
     return snippetData
   }
 
+  static async updateSnippet(id, snippet, description) {
+    const updatedSnippetData = await SnippetModel.findByIdAndUpdate(
+      { _id: id },
+      { snippet, description },
+      { new: true }
+    )
+    return updatedSnippetData
+  }
+
   static async deleteSnippets(id) {
     const deletedSnippetData = await SnippetModel.findOneAndDelete({ _id: id })
     return deletedSnippetData
@@ -53,6 +62,23 @@ module.exports = snippetDbFunc = {
       let snippets = await SnippetService.getSnippets(userId)
 
       res.json({ status: true, success: snippets })
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  updateUserSnippets: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const { snippet, description } = req.body
+
+      let updatedData = await SnippetService.updateSnippet(
+        id,
+        snippet,
+        description
+      )
+
+      res.json({ status: true, success: updatedData })
     } catch (error) {
       next(error)
     }
