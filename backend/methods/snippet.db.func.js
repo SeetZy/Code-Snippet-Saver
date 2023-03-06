@@ -21,9 +21,9 @@ class SnippetService {
     return snippetData
   }
 
-  static async deleteSnippet(id) {
-    const deletedSnippet = await SnippetModel.findOneAndDelete({ _id: id })
-    return deletedSnippet
+  static async deleteSnippets(id) {
+    const deletedSnippetData = await SnippetModel.findOneAndDelete({ _id: id })
+    return deletedSnippetData
   }
 }
 
@@ -58,11 +58,11 @@ module.exports = snippetDbFunc = {
     }
   },
 
-  deleteSnippets: async (req, res, next) => {
+  deleteUserSnippets: async (req, res, next) => {
     try {
-      const { id } = req.query
+      const { id } = req.body
 
-      let deletedData = await SnippetService.deleteSnippet(id)
+      let deletedData = await SnippetService.deleteSnippets(id)
 
       res.json({ status: true, success: deletedData })
     } catch (error) {

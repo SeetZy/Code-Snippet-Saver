@@ -7,6 +7,7 @@ const express = require('express')
 // Defining a router
 const router = express.Router()
 
+// Gets all the methods
 const userDbFunc = require('../methods/user.db.func')
 const snippetDbFunc = require('../methods/snippet.db.func')
 
@@ -27,7 +28,10 @@ router.post('/create-snippet', snippetDbFunc.createNewSnippet)
 // Route to get users snippets
 router.get('/get-user-snippets', snippetDbFunc.getUserSnippets)
 
-// Route to delete snippets
-router.post('/delete-snippets', snippetDbFunc.deleteSnippets)
+// ROute to update users snippets
+router.post('/update-snippets')
+
+// Route to delete users snippets
+router.post('/delete-snippets', snippetDbFunc.deleteUserSnippets)
 
 module.exports = router
