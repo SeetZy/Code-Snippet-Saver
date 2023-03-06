@@ -59,7 +59,7 @@ class _AddSnippetState extends State<AddSnippet> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Text(
-                "Note: Syntax highlighting might not work for all languages & on page reload all inputted text dissapears",
+                "Note: Syntax highlighting might not work for all languages (not implemented yet) & on page reload all inputted text dissapears",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Expanded(

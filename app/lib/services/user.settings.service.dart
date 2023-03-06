@@ -12,6 +12,8 @@ import '../utils/http.routes.dart';
 import 'package:email_validator/email_validator.dart';
 // ? https://pub.dev/packages/http
 import 'package:http/http.dart' as http;
+// ? https://pub.dev/packages/shared_preferences
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSettings {
   // Function to delete a snippet
@@ -53,6 +55,9 @@ class UserSettings {
             ),
           ),
         );
+        // Clear the token from storage
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove('token');
         // Navigate to the login screen
         Navigator.pushReplacementNamed(context, '/signin');
       } else {

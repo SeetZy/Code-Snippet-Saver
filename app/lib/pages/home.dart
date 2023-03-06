@@ -34,10 +34,8 @@ class _HomeState extends State<Home> {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-      print(jwtDecodedToken);
       UserInfo.userId = jwtDecodedToken['_id'];
       UserInfo.username = jwtDecodedToken['username'];
-      print(UserInfo.username);
       UserInfo.email = jwtDecodedToken['email'];
     }
 
