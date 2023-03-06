@@ -22,6 +22,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   // Controllers
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -62,7 +63,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   width: 300,
-                  height: 500,
+                  height: 530,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -79,6 +80,18 @@ class _SignUpState extends State<SignUp> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                        ),
+
+                        // Email text input field
+                        TextField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                            hintText: "Username",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
 
                         // Email text input field
@@ -153,14 +166,16 @@ class _SignUpState extends State<SignUp> {
                               ElevatedButton(
                                 onPressed: () async {
                                   // Get the controller input as text
+                                  final String username =
+                                      _usernameController.text;
                                   final String email = _emailController.text;
                                   final String password =
                                       _passwordController.text;
                                   final String confirmPassword =
                                       _confirmPasswordController.text;
 
-                                  RegService.signUpUser(context, email,
-                                      password, confirmPassword);
+                                  RegService.signUpUser(context, username,
+                                      email, password, confirmPassword);
                                 },
                                 child: const Text("Sign Up"),
                               ),

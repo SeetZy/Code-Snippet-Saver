@@ -2,7 +2,7 @@
   * Utility imports
  */
 import 'package:app/services/auth.service.dart';
-import 'package:app/services/del.user.service.dart';
+import 'package:app/services/user.settings.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import '../services/user.info.dart';
@@ -20,6 +20,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  // Controllers
+  final TextEditingController _usernameController =
+      TextEditingController(text: UserInfo.username);
+  final TextEditingController _emailController =
+      TextEditingController(text: UserInfo.email);
+
   @override
   Widget build(BuildContext context) {
     return Baseplate(
@@ -41,10 +47,125 @@ class _SettingsState extends State<Settings> {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                Text(
-                  'Email: ${UserInfo.email}',
-                  style: const TextStyle(fontSize: 15),
-                )
+                Container(
+                  width: MediaQuery.of(context).size.width - 90,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: GlobalVariables.secondaryColor2,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 15),
+                          child: Text(
+                            'User Settings',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+
+                        // Username info
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: Text(
+                                  'Username: ',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+
+                              // Email text input field
+                              SizedBox(
+                                width: 180,
+                                child: TextField(
+                                  controller: _usernameController,
+                                  decoration: const InputDecoration(
+                                    hintText: "Username",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Email info
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 45),
+                              child: Text(
+                                'Email: ',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+
+                            // Email text input field
+                            SizedBox(
+                              width: 180,
+                              child: TextField(
+                                controller: _emailController,
+                                decoration: const InputDecoration(
+                                  hintText: "Email",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final String username =
+                                    _usernameController.text;
+                                final String email = _emailController.text;
+                                UserSettings.updateUserData(
+                                    context, UserInfo.userId, username, email);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      GlobalVariables.accentColor2),
+                              child: SizedBox(
+                                width: 120,
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.save,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      ' Save Data',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -60,7 +181,7 @@ class _SettingsState extends State<Settings> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ElevatedButton(
                     onPressed: () {
-                      DelUser.deleteUser(context, UserInfo.userId);
+                      UserSettings.deleteUser(context, UserInfo.userId);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: GlobalVariables.accentColor3,

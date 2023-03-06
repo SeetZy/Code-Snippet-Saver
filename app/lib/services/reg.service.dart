@@ -16,9 +16,12 @@ import 'package:http/http.dart' as http;
 
 class RegService {
   static signUpUser(
-      BuildContext context, email, password, confirmPassword) async {
+      BuildContext context, username, email, password, confirmPassword) async {
     // Checks if the text fields are filled
-    if (email.isNotEmpty && password.isNotEmpty && confirmPassword.isNotEmpty) {
+    if (username.isNotEmpty &&
+        email.isNotEmpty &&
+        password.isNotEmpty &&
+        confirmPassword.isNotEmpty) {
       // Checks if the provided email is valid
       if (EmailValidator.validate(email) == true) {
         // Checks if the provided passwords are valid
@@ -34,6 +37,7 @@ class RegService {
             );
 
             var regBody = {
+              "username": username,
               "email": email,
               "password": password,
             };

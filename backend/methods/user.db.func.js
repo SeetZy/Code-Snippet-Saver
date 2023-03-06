@@ -85,7 +85,7 @@ module.exports = userDbFunc = {
   // Exporting the signIn function for user authentication
   signIn: async (req, res, next) => {
     try {
-      const { email, password } = req.body
+      const { username, email, password } = req.body
       const user = await UserService.checkUser(email)
 
       // Checks if a user with the provided email already exists
@@ -99,6 +99,7 @@ module.exports = userDbFunc = {
           // If the provided passwords do not match
           const tokenData = {
             _id: user._id,
+            username: user.username,
             email: user.email,
           }
 

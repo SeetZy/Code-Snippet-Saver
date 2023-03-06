@@ -22,7 +22,7 @@ import 'package:app/components/baseplate.dart';
 class Home extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final token;
-  const Home({super.key, @required this.token});
+  const Home({Key? key, required this.token}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -34,9 +34,13 @@ class _HomeState extends State<Home> {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+      print(jwtDecodedToken);
       UserInfo.userId = jwtDecodedToken['_id'];
+      UserInfo.username = jwtDecodedToken['username'];
+      print(UserInfo.username);
       UserInfo.email = jwtDecodedToken['email'];
     }
+
     getSnippets();
   }
 
