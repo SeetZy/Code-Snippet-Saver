@@ -57,7 +57,7 @@ class _SettingsState extends State<Settings> {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(bottom: 15),
@@ -80,7 +80,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                               ),
 
-                              // Email text input field
+                              // Username text input field
                               SizedBox(
                                 width: 180,
                                 child: TextField(
@@ -126,10 +126,11 @@ class _SettingsState extends State<Settings> {
                           ],
                         ),
 
+                        // Button to save the data
                         Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            width: 140,
                             child: ElevatedButton(
                               onPressed: () {
                                 final String username =
@@ -141,23 +142,22 @@ class _SettingsState extends State<Settings> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       GlobalVariables.accentColor2),
-                              child: SizedBox(
-                                width: 120,
-                                child: Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.save,
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.save,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'Save Data',
+                                    style: TextStyle(
                                       color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text(
-                                      ' Save Data',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

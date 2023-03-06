@@ -33,13 +33,31 @@ class UserService {
     return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
 
-  static async updateData(id, username, email) {
-    const updatedUserData = await UserModel.findByIdAndUpdate(
-      { _id: id },
-      { username, email },
-      { new: true }
-    )
-    return updatedUserData
+  static async updateData(id, username, email, secretKey, jwtExpire) {
+    try {
+      const updatedUserData = await UserModel.findByIdAndUpdate(
+        { _id: id },
+        { username, email },
+        { new: true }
+      )
+
+      // Generate a new token with the updated user data
+      const tokenData = {
+        _id: updatedUserData._id,
+        username: updatedUserData.username,
+        email: updatedUserData.email,
+      }
+
+      const token = await UserService.generateToken(
+        tokenData,
+        secretKey,
+        jwtExpire
+      )
+
+      return { updatedUserData, token }
+    } catch (error) {
+      throw new Error(`Failed to update user data: ${error.message}`)
+    }
   }
 
   static async deleteUser(id) {
@@ -132,9 +150,15 @@ module.exports = userDbFunc = {
       const { id } = req.params
       const { username, email } = req.body
 
-      let updatedData = await UserService.updateData(id, username, email)
+      const { updatedUserData, token } = await UserService.updateData(
+        id,
+        username,
+        email,
+        'test',
+        '24h'
+      )
 
-      res.json({ status: true, success: updatedData })
+      res.json({ status: true, success: updatedUserData, token })
     } catch (error) {
       next(error)
     }
