@@ -33,31 +33,42 @@ class UserService {
     return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
 
-  static async updateData(id, username, email, secretKey, jwtExpire) {
-    try {
-      const updatedUserData = await UserModel.findByIdAndUpdate(
-        { _id: id },
-        { username, email },
-        { new: true }
-      )
+  static async updateData(id, username, email) {
+    const updatedUserData = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { username, email },
+      { new: true }
+    )
 
-      // Generate a new token with the updated user data
-      const tokenData = {
-        _id: updatedUserData._id,
-        username: updatedUserData.username,
-        email: updatedUserData.email,
-      }
-
-      const token = await UserService.generateToken(
-        tokenData,
-        secretKey,
-        jwtExpire
-      )
-
-      return { updatedUserData, token }
-    } catch (error) {
-      throw new Error(`Failed to update user data: ${error.message}`)
+    // Invalidate old token by setting its expiry to a past date
+    const oldTokenData = {
+      _id: updatedUserData._id,
+      username: updatedUserData.username,
+      email: updatedUserData.email,
+      exp: Math.floor(Date.now() / 1000) - 30, // 30 seconds ago
     }
+    const oldToken = await UserService.generateToken(
+      oldTokenData,
+      'test',
+      '24h'
+    )
+
+    // Generate a new token with updated user data
+    const newTokenData = {
+      _id: updatedUserData._id,
+      username: updatedUserData.username,
+      email: updatedUserData.email,
+    }
+    const newToken = await UserService.generateToken(
+      newTokenData,
+      'test',
+      '24h'
+    )
+
+    // Update user's token with new token
+    await UserModel.findByIdAndUpdate({ _id: id }, { token: newToken })
+
+    return { oldToken, newToken, updatedUserData }
   }
 
   static async deleteUser(id) {
@@ -150,15 +161,13 @@ module.exports = userDbFunc = {
       const { id } = req.params
       const { username, email } = req.body
 
-      const { updatedUserData, token } = await UserService.updateData(
-        id,
-        username,
-        email,
-        'test',
-        '24h'
-      )
+      const {
+        oldToken,
+        newToken,
+        success: updatedData,
+      } = await UserService.updateData(id, username, email)
 
-      res.json({ status: true, success: updatedUserData, token })
+      res.json({ status: true, success: updatedData, oldToken, newToken })
     } catch (error) {
       next(error)
     }

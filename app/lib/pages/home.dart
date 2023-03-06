@@ -36,7 +36,9 @@ class _HomeState extends State<Home> {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
       UserInfo.userId = jwtDecodedToken['_id'];
       UserInfo.username = jwtDecodedToken['username'];
+      print(jwtDecodedToken['username']);
       UserInfo.email = jwtDecodedToken['email'];
+      print(jwtDecodedToken['email']);
     }
 
     getSnippets();
