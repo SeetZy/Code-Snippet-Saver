@@ -10,9 +10,9 @@ const SnippetModel = require('../models/snippet.model')
 
 class UserService {
   // Method for registering a new user
-  static async signUpUser(email, password) {
+  static async signUpUser(username, email, password) {
     try {
-      const createUser = new UserModel({ email, password })
+      const createUser = new UserModel({ username, email, password })
       return await createUser.save()
     } catch (error) {
       throw new Error(`Failed to register user: ${error.message}`)
@@ -33,6 +33,15 @@ class UserService {
     return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
 
+  static async updateData(id, username, email) {
+    const updatedUserData = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { username, email },
+      { new: true }
+    )
+    return updatedUserData
+  }
+
   static async deleteUser(id) {
     const deletedUserData = await UserModel.findOneAndDelete({ _id: id })
     const deletedUserSnippets = await SnippetModel.deleteMany({
@@ -47,7 +56,7 @@ module.exports = userDbFunc = {
   // Exporting the signUp function for user registration
   signUp: async (req, res, next) => {
     try {
-      const { email, password } = req.body
+      const { username, email, password } = req.body
       const user = await UserService.checkUser(email)
 
       // Checks if a user with the provided email already exists
@@ -59,7 +68,11 @@ module.exports = userDbFunc = {
         return
       } else if (!user) {
         // If there isn't a user with the provided email
-        const successRes = await UserService.signUpUser(email, password)
+        const successRes = await UserService.signUpUser(
+          username,
+          email,
+          password
+        )
 
         res.json({ status: true, success: 'User Registered' })
       }
@@ -68,6 +81,7 @@ module.exports = userDbFunc = {
       res.status(500).json({ status: false, error: 'Failed to register user' })
     }
   },
+
   // Exporting the signIn function for user authentication
   signIn: async (req, res, next) => {
     try {
@@ -109,6 +123,19 @@ module.exports = userDbFunc = {
     } catch (error) {
       console.error(error.message)
       res.status(500).json({ status: false, error: 'Failed to login' })
+    }
+  },
+
+  updateUserData: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const { username, email } = req.body
+
+      let updatedData = await UserService.updateData(id, username, email)
+
+      res.json({ status: true, success: updatedData })
+    } catch (error) {
+      next(error)
     }
   },
 

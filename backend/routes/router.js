@@ -21,6 +21,8 @@ router.get('/', (req, res) => {
 router.post('/signup', userDbFunc.signUp)
 // Route to signin a new user
 router.post('/signin', userDbFunc.signIn)
+// Route to update user data
+router.put('/update-user-data/:id', userDbFunc.updateUserData)
 // Route to delete a user
 router.post('/delete-user', userDbFunc.deleteUserData)
 
