@@ -1,6 +1,7 @@
 /*
   * Utility imports
  */
+import 'package:app/services/snippet.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/services/user.info.dart';
 import '../utils/global.vars.dart';
@@ -16,8 +17,8 @@ class ShowSnippets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return // Shows every available code snippet that is saved to the user
-        Padding(
+    // Shows every available code snippet that is saved to the user
+    return Padding(
       padding: const EdgeInsets.all(10),
       child: UserInfo.snippets == null
           ? const Center(
@@ -174,7 +175,12 @@ class ShowSnippets extends StatelessWidget {
                                             padding: const EdgeInsets.only(
                                                 left: 5, right: 5),
                                             child: ElevatedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                SnippetService.deleteSnippet(
+                                                    context,
+                                                    UserInfo.snippets![index]
+                                                        ['_id']);
+                                              },
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       GlobalVariables

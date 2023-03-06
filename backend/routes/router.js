@@ -27,4 +27,7 @@ router.post('/create-snippet', snippetDbFunc.createNewSnippet)
 // Route to get users snippets
 router.get('/get-user-snippets', snippetDbFunc.getUserSnippets)
 
+// Route to delete snippets
+router.post('/delete-snippets', snippetDbFunc.deleteSnippets)
+
 module.exports = router

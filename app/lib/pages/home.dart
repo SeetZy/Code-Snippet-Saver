@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_const
-
 /*
   * Utility imports
  */
@@ -36,30 +34,31 @@ class _HomeState extends State<Home> {
     super.initState();
     if (widget.token != null) {
       Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-      UserInfo.token = widget.token;
       UserInfo.userId = jwtDecodedToken['_id'];
       UserInfo.email = jwtDecodedToken['email'];
-      getSnippets(UserInfo.userId);
     }
+    getSnippets();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Reload data when page is reloaded
-    getSnippets(UserInfo.userId);
+    getSnippets();
   }
 
-  void getSnippets(userId) async {
+  void getSnippets() async {
     try {
-      var response = await http.get(
-          Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}'),
-          headers: {"Content-Type": "application/json"});
+      final response = await http.get(
+        Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}'),
+        headers: {"Content-Type": "application/json"},
+      );
 
-      var jsonResponse = jsonDecode(response.body);
+      final jsonResponse = jsonDecode(response.body);
 
-      UserInfo.snippets = jsonResponse['success'];
-      setState(() {});
+      setState(() {
+        UserInfo.snippets = jsonResponse['success'];
+      });
     } catch (error) {
       log('An error occurred whilst doing a HTTP request: $error');
     }
@@ -75,7 +74,7 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(left: 10, right: 20, bottom: 10),
                 child: Text(
                   'Snippet Overview',
                   style: TextStyle(

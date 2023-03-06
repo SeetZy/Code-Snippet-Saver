@@ -20,6 +20,11 @@ class SnippetService {
     const snippetData = await SnippetModel.find({ userId })
     return snippetData
   }
+
+  static async deleteSnippet(id) {
+    const deletedSnippet = await SnippetModel.findOneAndDelete({ _id: id })
+    return deletedSnippet
+  }
 }
 
 module.exports = snippetDbFunc = {
@@ -48,6 +53,18 @@ module.exports = snippetDbFunc = {
       let snippets = await SnippetService.getSnippets(userId)
 
       res.json({ status: true, success: snippets })
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  deleteSnippets: async (req, res, next) => {
+    try {
+      const { id } = req.query
+
+      let deletedData = await SnippetService.deleteSnippet(id)
+
+      res.json({ status: true, success: deletedData })
     } catch (error) {
       next(error)
     }

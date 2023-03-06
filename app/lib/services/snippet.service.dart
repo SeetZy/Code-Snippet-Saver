@@ -97,4 +97,60 @@ class SnippetService {
       );
     }
   }
+
+  // Function to delete a snippet
+  static void deleteSnippet(BuildContext context, id) async {
+    try {
+      var regBody = {"id": id};
+
+      var response = await http.post(
+        Uri.parse(HttpRoutes.deleteSnippets),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(regBody),
+      );
+
+      var jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['status']) {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pop();
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Successfully Deleted a code snippet',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: GlobalVariables.accentColor2,
+            action: SnackBarAction(
+              label: 'x',
+              textColor: Colors.white,
+              onPressed: () {
+                // code to be executed when the user dismisses the SnackBar
+              },
+            ),
+          ),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Something went wrong',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: GlobalVariables.accentColor3,
+            action: SnackBarAction(
+              label: 'x',
+              textColor: Colors.white,
+              onPressed: () {
+                // code to be executed when the user dismisses the SnackBar
+              },
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      log('Error occurred duting HTTP request: $error');
+    }
+  }
 }
