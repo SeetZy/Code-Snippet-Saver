@@ -31,6 +31,11 @@ class UserService {
   static async generateToken(tokenData, secretKey, jwtExpire) {
     return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
+
+  static async deleteUser(id) {
+    const deletedUserData = await UserModel.findOneAndDelete({ _id: id })
+    return deletedUserData
+  }
 }
 
 // Defines functions object to be exported
@@ -100,6 +105,18 @@ module.exports = userDbFunc = {
     } catch (error) {
       console.error(error.message)
       res.status(500).json({ status: false, error: 'Failed to login' })
+    }
+  },
+
+  deleteUserData: async (req, res, next) => {
+    try {
+      const { id } = req.body
+
+      let deletedData = await UserService.deleteUser(id)
+
+      res.json({ status: true, success: deletedData })
+    } catch (error) {
+      next(error)
     }
   },
 }

@@ -48,23 +48,43 @@ class _SettingsState extends State<Settings> {
             ),
           ),
 
-          // Button to add new snippets
+          // Buttons
           Positioned(
             right: 16,
             bottom: 16,
-            child: FloatingActionButton.extended(
-              backgroundColor: GlobalVariables.accentColor3,
-              onPressed: () {
-                AuthService.logout(context);
-              },
-              label: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
+            child: Column(
+              children: [
+                // Button to delete profile
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: GlobalVariables.accentColor3,
+                    ),
+                    child: const Text(
+                      "Delete profile",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+
+                // Button to logout
+                FloatingActionButton.extended(
+                  backgroundColor: GlobalVariables.accentColor3,
+                  onPressed: () {
+                    AuthService.logout(context);
+                  },
+                  label: const Text(
+                    "Logout",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

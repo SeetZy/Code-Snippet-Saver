@@ -16,21 +16,21 @@ router.get('/', (req, res) => {
   res.send('This is not meant to be viewed')
 })
 
+// User Routes
 // Route to signup a new user
 router.post('/signup', userDbFunc.signUp)
-
 // Route to signin a new user
 router.post('/signin', userDbFunc.signIn)
+// Route to delete a user
+router.post('/delete-user', userDbFunc.deleteUserData)
 
+// Snippet Routes
 // Route to create a new code snippet
 router.post('/create-snippet', snippetDbFunc.createNewSnippet)
-
 // Route to get users snippets
 router.get('/get-user-snippets', snippetDbFunc.getUserSnippets)
-
-// ROute to update users snippets
+// Route to update users snippets
 router.put('/update-snippets/:id', snippetDbFunc.updateUserSnippets)
-
 // Route to delete users snippets
 router.post('/delete-snippets', snippetDbFunc.deleteUserSnippets)
 
