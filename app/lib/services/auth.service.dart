@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 /*
   * Utility imports
  */
@@ -29,6 +31,14 @@ class AuthService {
     if (email.isNotEmpty && password.isNotEmpty) {
       if (EmailValidator.validate(email) == true) {
         try {
+          // Show loading bar
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const Center(child: CircularProgressIndicator());
+            },
+          );
+
           var regBody = {
             "email": email,
             "password": password,
@@ -43,9 +53,10 @@ class AuthService {
           var jsonResponse = jsonDecode(response.body);
 
           if (jsonResponse['status']) {
+            // Closes the loading bar
+            Navigator.of(context).pop();
             var token = jsonResponse['token'];
             prefs.setString('token', token);
-            // ignore: use_build_context_synchronously
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -54,7 +65,6 @@ class AuthService {
                 ),
               ),
             );
-            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(
@@ -72,7 +82,6 @@ class AuthService {
               ),
             );
           } else {
-            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(
@@ -94,7 +103,6 @@ class AuthService {
           log('Error occurred during HTTP request: $error');
         }
       } else {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
@@ -113,7 +121,6 @@ class AuthService {
         );
       }
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -139,9 +146,7 @@ class AuthService {
     prefs.remove('token');
 
     // Navigate to the login screen
-    // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, '/signin');
-    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text(

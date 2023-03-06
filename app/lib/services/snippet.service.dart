@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 /*
   * Utility imports
  */
@@ -20,6 +22,14 @@ class SnippetService {
         snippet.isNotEmpty &&
         description.isNotEmpty) {
       try {
+        // Show loading bar
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const Center(child: CircularProgressIndicator());
+          },
+        );
+
         var regBody = {
           "userId": UserInfo.userId,
           "fileName": fileName,
@@ -37,9 +47,10 @@ class SnippetService {
         var jsonResponse = jsonDecode(response.body);
 
         if (jsonResponse['status']) {
-          // ignore: use_build_context_synchronously
+          // Closes the loading bar
           Navigator.of(context).pop();
-          // ignore: use_build_context_synchronously
+          // Closes the pop up menu
+          Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text(
@@ -57,7 +68,6 @@ class SnippetService {
             ),
           );
         } else {
-          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text(
@@ -79,7 +89,6 @@ class SnippetService {
         log('Error occurred duting HTTP request: $error');
       }
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -103,6 +112,14 @@ class SnippetService {
   static Future<void> updateSnippet(
       BuildContext context, id, snippet, description) async {
     try {
+      // Show loading bar
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+
       var regBody = jsonEncode({
         "snippet": snippet,
         "description": description,
@@ -117,7 +134,8 @@ class SnippetService {
       var jsonResponse = jsonDecode(response.body);
 
       if (jsonResponse['status']) {
-        // ignore: use_build_context_synchronously
+        // Closes the loading bar
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
@@ -135,7 +153,6 @@ class SnippetService {
           ),
         );
       } else {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
@@ -161,6 +178,14 @@ class SnippetService {
   // Function to delete a snippet
   static void deleteSnippet(BuildContext context, id) async {
     try {
+      // Show loading bar
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+
       var regBody = {"id": id};
 
       var response = await http.post(
@@ -171,9 +196,10 @@ class SnippetService {
 
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status']) {
-        // ignore: use_build_context_synchronously
+        // Closes the loading bar
         Navigator.of(context).pop();
-        // ignore: use_build_context_synchronously
+        // Closes the popup menu
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
@@ -191,7 +217,6 @@ class SnippetService {
           ),
         );
       } else {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 /*
   * Utility imports
  */
@@ -23,6 +25,14 @@ class RegService {
         // ignore: unrelated_type_equality_checks
         if (password == confirmPassword) {
           try {
+            // Show loading bar
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const Center(child: CircularProgressIndicator());
+              },
+            );
+
             var regBody = {
               "email": email,
               "password": password,
@@ -37,9 +47,9 @@ class RegService {
             var jsonResponse = jsonDecode(response.body);
 
             if (jsonResponse['status']) {
-              // ignore: use_build_context_synchronously
+              // Closes the loading bar
+              Navigator.of(context).pop();
               Navigator.of(context).pushNamed(AppRoutes.signinRoute);
-              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
@@ -57,7 +67,6 @@ class RegService {
                 ),
               );
             } else {
-              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
@@ -79,7 +88,6 @@ class RegService {
             log('Error occurred duting HTTP request: $error');
           }
         } else {
-          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text(
@@ -98,7 +106,6 @@ class RegService {
           );
         }
       } else {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
@@ -117,7 +124,6 @@ class RegService {
         );
       }
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
