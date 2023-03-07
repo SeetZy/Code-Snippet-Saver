@@ -84,6 +84,7 @@ class AuthService {
           } else {
             // Closes the loading bar
             Navigator.of(context).pop();
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text(

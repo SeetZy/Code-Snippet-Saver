@@ -13,8 +13,31 @@ import '../utils/http.routes.dart';
 import 'package:http/http.dart' as http;
 
 class SnippetService {
+  static Future<void> getSnippets(Function(bool) setLoading) async {
+    try {
+      setLoading(true);
+
+      final response = await http.get(
+        Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}'),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      final jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse['success'] != null) {
+        UserInfo.snippets = jsonResponse['success'];
+      } else {
+        UserInfo.snippets = [];
+      }
+
+      setLoading(false);
+    } catch (error) {
+      log('An error occurred whilst doing a HTTP request: $error');
+    }
+  }
+
   // Function to save a snippet
-  static saveCodeSnippet(
+  static void saveCodeSnippet(
       BuildContext context, fileName, fileType, snippet, description) async {
     // Checks if the code snippet data is empty or not
     if (fileName.isNotEmpty &&
@@ -196,6 +219,9 @@ class SnippetService {
 
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status']) {
+        // Remove the deleted snippet from the UserInfo.snippets list
+        UserInfo.snippets?.removeWhere((snippet) => snippet['_id'] == id);
+
         // Closes the loading bar
         Navigator.of(context).pop();
         // Closes the popup menu

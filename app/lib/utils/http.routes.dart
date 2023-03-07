@@ -1,19 +1,13 @@
 class HttpRoutes {
   // HTTP routes for user functions
-  static const signUpUrl = 'https://shielded-river-62504.herokuapp.com/signup';
-  static const signInUrl = 'https://shielded-river-62504.herokuapp.com/signin';
-  static const updateUserData =
-      'https://shielded-river-62504.herokuapp.com/update-user-data';
-  static const deleteUser =
-      'https://shielded-river-62504.herokuapp.com/delete-user';
+  static const signUpUrl = 'http://localhost:5000/signup';
+  static const signInUrl = 'http://localhost:5000/signin';
+  static const updateUserData = 'http://localhost:5000/update-user-data';
+  static const deleteUser = 'http://localhost:5000/delete-user';
 
   // HTTP routes for snippet functions
-  static const addSnippetUrl =
-      'https://shielded-river-62504.herokuapp.com/create-snippet';
-  static const getUserSnippets =
-      'https://shielded-river-62504.herokuapp.com/get-user-snippets';
-  static const updateUserSnippets =
-      'https://shielded-river-62504.herokuapp.com/update-snippets';
-  static const deleteUserSnippets =
-      'https://shielded-river-62504.herokuapp.com/delete-snippets';
+  static const addSnippetUrl = 'http://localhost:5000/create-snippet';
+  static const getUserSnippets = 'http://localhost:5000/get-user-snippets';
+  static const updateUserSnippets = 'http://localhost:5000/update-snippets';
+  static const deleteUserSnippets = 'http://localhost:5000/delete-snippets';
 }

@@ -49,7 +49,7 @@ class _SettingsState extends State<Settings> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 90,
-                  height: 250,
+                  height: 271,
                   decoration: BoxDecoration(
                     color: GlobalVariables.secondaryColor2,
                     borderRadius: BorderRadius.circular(10),
@@ -162,6 +162,14 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                         ),
+
+                        const Text(
+                          "Note: changes will appear only when you re-log with the new credentials",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
                       ],
                     ),
                   ),

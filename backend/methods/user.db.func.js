@@ -39,36 +39,7 @@ class UserService {
       { username, email },
       { new: true }
     )
-
-    // Invalidate old token by setting its expiry to a past date
-    const oldTokenData = {
-      _id: updatedUserData._id,
-      username: updatedUserData.username,
-      email: updatedUserData.email,
-      exp: Math.floor(Date.now() / 1000) - 30, // 30 seconds ago
-    }
-    const oldToken = await UserService.generateToken(
-      oldTokenData,
-      'test',
-      '24h'
-    )
-
-    // Generate a new token with updated user data
-    const newTokenData = {
-      _id: updatedUserData._id,
-      username: updatedUserData.username,
-      email: updatedUserData.email,
-    }
-    const newToken = await UserService.generateToken(
-      newTokenData,
-      'test',
-      '24h'
-    )
-
-    // Update user's token with new token
-    await UserModel.findByIdAndUpdate({ _id: id }, { token: newToken })
-
-    return { oldToken, newToken, updatedUserData }
+    return updatedUserData
   }
 
   static async deleteUser(id) {
@@ -161,13 +132,9 @@ module.exports = userDbFunc = {
       const { id } = req.params
       const { username, email } = req.body
 
-      const {
-        oldToken,
-        newToken,
-        success: updatedData,
-      } = await UserService.updateData(id, username, email)
+      let updatedData = await UserService.updateData(id, username, email)
 
-      res.json({ status: true, success: updatedData, oldToken, newToken })
+      res.json({ status: true, success: updatedData })
     } catch (error) {
       next(error)
     }
