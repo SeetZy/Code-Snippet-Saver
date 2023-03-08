@@ -3,8 +3,8 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../utils/global.vars.dart';
-import '../services/snippet.service.dart';
+import 'package:app/utils/global.vars.dart';
+import 'package:app/services/snippet.service.dart';
 
 class SaveSnippet extends StatefulWidget {
   const SaveSnippet({super.key, required this.snippetController});
@@ -164,8 +164,14 @@ class _SaveSnippetState extends State<SaveSnippet> {
                             final String description =
                                 _descriptionController.text;
 
-                            SnippetService.saveCodeSnippet(context, fileName,
-                                fileType, snippet, description);
+                            SnippetService.saveCodeSnippet(
+                              context,
+                              fileName,
+                              fileType,
+                              snippet,
+                              description,
+                              widget.snippetController,
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: GlobalVariables.accentColor2),

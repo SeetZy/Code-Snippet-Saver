@@ -1,10 +1,9 @@
 /*
   * Utility imports
  */
-import 'package:app/components/show.snippets.dart';
 import 'package:flutter/material.dart';
-import '../services/user.info.dart';
-import '../utils/global.vars.dart';
+import 'package:app/services/user.info.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/jwt_decoder
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -13,6 +12,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
   * Page/Component imports
  */
 import 'package:app/components/baseplate.dart';
+import 'package:app/components/show.snippets.dart';
 
 class Home extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables

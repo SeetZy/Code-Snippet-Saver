@@ -1,11 +1,10 @@
 /*
   * Utility imports
  */
-import 'package:app/services/auth.service.dart';
-import 'package:app/services/user.settings.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
-import '../services/user.info.dart';
+import 'package:app/services/user.info.dart';
+import 'package:app/services/user.settings.service.dart';
 
 /*
   * Page/Component imports
@@ -205,7 +204,7 @@ class _SettingsState extends State<Settings> {
                 FloatingActionButton.extended(
                   backgroundColor: GlobalVariables.accentColor3,
                   onPressed: () {
-                    AuthService.logout(context);
+                    UserSettings.logout(context);
                   },
                   label: const Text(
                     "Logout",

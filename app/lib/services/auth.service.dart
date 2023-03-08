@@ -6,6 +6,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
 import 'package:email_validator/email_validator.dart';
@@ -15,10 +16,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /*
-  * Page/component imports
+  * Page/Component imports
  */
 import '../pages/home.dart';
-import '../utils/global.vars.dart';
+import 'package:app/components/toasts.dart';
 
 class AuthService {
   static late SharedPreferences prefs;
@@ -65,106 +66,26 @@ class AuthService {
                 ),
               ),
             );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'User has signed in successfully',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: GlobalVariables.accentColor2,
-                action: SnackBarAction(
-                  label: 'x',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // code to be executed when the user dismisses the SnackBar
-                  },
-                ),
-              ),
-            );
+
+            Toast.toastMsg(context, 'User has signed in successfully',
+                GlobalVariables.accentColor2);
           } else {
             // Closes the loading bar
             Navigator.of(context).pop();
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Please check the email and password',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: GlobalVariables.accentColor3,
-                action: SnackBarAction(
-                  label: 'x',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // code to be executed when the user dismisses the SnackBar
-                  },
-                ),
-              ),
-            );
+            Toast.toastMsg(context, 'Please check the email and password',
+                GlobalVariables.accentColor3);
           }
         } catch (error) {
           log('Error occurred during HTTP request: $error');
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Please provide a valid email',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(context, 'Please provide a valid email adress',
+            GlobalVariables.accentColor3);
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Please fill all the fields',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: GlobalVariables.accentColor3,
-          action: SnackBarAction(
-            label: 'x',
-            textColor: Colors.white,
-            onPressed: () {
-              // code to be executed when the user dismisses the SnackBar
-            },
-          ),
-        ),
-      );
+      Toast.toastMsg(
+          context, 'Please fill all the fields', GlobalVariables.accentColor3);
     }
-  }
-
-  static logout(BuildContext context) async {
-    // Clear the token from storage
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-
-    // Navigate to the login screen
-    Navigator.pushReplacementNamed(context, '/signin');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text(
-          'Successfully signed out',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: GlobalVariables.accentColor2,
-        action: SnackBarAction(
-          label: 'x',
-          textColor: Colors.white,
-          onPressed: () {
-            // code to be executed when the user dismisses the SnackBar
-          },
-        ),
-      ),
-    );
   }
 }

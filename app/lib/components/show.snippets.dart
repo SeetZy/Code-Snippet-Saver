@@ -4,7 +4,7 @@
 import 'package:app/services/snippet.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/services/user.info.dart';
-import '../utils/global.vars.dart';
+import 'package:app/utils/global.vars.dart';
 import 'package:app/components/editor.dart';
 
 class ShowSnippets extends StatefulWidget {
@@ -198,8 +198,6 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                                                       _descriptionController
                                                           .text,
                                                     );
-
-                                                    _loadSnippets();
                                                   },
                                                   style:
                                                       ElevatedButton.styleFrom(

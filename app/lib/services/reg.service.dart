@@ -14,6 +14,11 @@ import 'package:email_validator/email_validator.dart';
 // ? https://pub.dev/packages/http
 import 'package:http/http.dart' as http;
 
+/*
+  * Page/Component imports
+ */
+import 'package:app/components/toasts.dart';
+
 class RegService {
   static RegExp upperCase = RegExp(r'[A-Z]');
   static RegExp digit = RegExp(r'[0-9]');
@@ -66,118 +71,40 @@ class RegService {
               if (jsonResponse['status']) {
                 // Closes the loading bar
                 Navigator.of(context).pop();
+
                 Navigator.of(context).pushNamed(AppRoutes.signinRoute);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text(
-                      'User created successfully',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: GlobalVariables.accentColor2,
-                    action: SnackBarAction(
-                      label: 'x',
-                      textColor: Colors.white,
-                      onPressed: () {
-                        // code to be executed when the user dismisses the SnackBar
-                      },
-                    ),
-                  ),
-                );
+
+                Toast.toastMsg(context, 'User created successfully',
+                    GlobalVariables.accentColor2);
               } else {
                 // Closes the loading bar
                 Navigator.of(context).pop();
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text(
-                      'A user with this email already exists',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: GlobalVariables.accentColor3,
-                    action: SnackBarAction(
-                      label: 'x',
-                      textColor: Colors.white,
-                      onPressed: () {
-                        // code to be executed when the user dismisses the SnackBar
-                      },
-                    ),
-                  ),
-                );
+                Toast.toastMsg(
+                    context,
+                    'A user with this email adress already exists',
+                    GlobalVariables.accentColor3);
               }
             } catch (error) {
               log('Error occurred duting HTTP request: $error');
             }
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Your passwords do not container one or some of the following: atleast 1 number, capital letter or special character',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: GlobalVariables.accentColor3,
-                action: SnackBarAction(
-                  label: 'x',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // code to be executed when the user dismisses the SnackBar
-                  },
-                ),
-              ),
-            );
+            Toast.toastMsg(
+                context,
+                'Your passwords do not container one or some of the following: atleast 1 number, capital letter or special character',
+                GlobalVariables.accentColor3);
           }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'The passwords do not match',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: GlobalVariables.accentColor3,
-              action: SnackBarAction(
-                label: 'x',
-                textColor: Colors.white,
-                onPressed: () {
-                  // code to be executed when the user dismisses the SnackBar
-                },
-              ),
-            ),
-          );
+          Toast.toastMsg(context, 'The password do not match',
+              GlobalVariables.accentColor3);
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Please provide a valid email',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(context, 'Please provide a valid email adress',
+            GlobalVariables.accentColor3);
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Please fill all the fields',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: GlobalVariables.accentColor3,
-          action: SnackBarAction(
-            label: 'x',
-            textColor: Colors.white,
-            onPressed: () {
-              // code to be executed when the user dismisses the SnackBar
-            },
-          ),
-        ),
-      );
+      Toast.toastMsg(
+          context, 'Please fill all the fields', GlobalVariables.accentColor3);
     }
   }
 }

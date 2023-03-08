@@ -8,9 +8,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/services/user.info.dart';
-import '../utils/http.routes.dart';
+import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/http
 import 'package:http/http.dart' as http;
+
+/*
+  * Page/Component imports
+ */
+import 'package:app/components/toasts.dart';
 
 class SnippetService {
   static Future<void> getSnippets(Function(bool) setLoading) async {
@@ -37,8 +42,8 @@ class SnippetService {
   }
 
   // Function to save a snippet
-  static void saveCodeSnippet(
-      BuildContext context, fileName, fileType, snippet, description) async {
+  static void saveCodeSnippet(BuildContext context, fileName, fileType, snippet,
+      description, TextEditingController snippetController) async {
     // Checks if the code snippet data is empty or not
     if (fileName.isNotEmpty &&
         fileType.isNotEmpty &&
@@ -74,60 +79,21 @@ class SnippetService {
           Navigator.of(context).pop();
           // Closes the pop up menu
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Successfully added a code snippet',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: GlobalVariables.accentColor2,
-              action: SnackBarAction(
-                label: 'x',
-                textColor: Colors.white,
-                onPressed: () {
-                  // code to be executed when the user dismisses the SnackBar
-                },
-              ),
-            ),
-          );
+
+          snippetController.clear();
+
+          Toast.toastMsg(context, 'Successfully added a code snippet',
+              GlobalVariables.accentColor2);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text(
-                'Something went wrong',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: GlobalVariables.accentColor3,
-              action: SnackBarAction(
-                label: 'x',
-                textColor: Colors.white,
-                onPressed: () {
-                  // code to be executed when the user dismisses the SnackBar
-                },
-              ),
-            ),
-          );
+          Toast.toastMsg(
+              context, 'Something went wrong', GlobalVariables.accentColor3);
         }
       } catch (error) {
         log('Error occurred duting HTTP request: $error');
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Please fill all the fields',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: GlobalVariables.accentColor3,
-          action: SnackBarAction(
-            label: 'x',
-            textColor: Colors.white,
-            onPressed: () {
-              // code to be executed when the user dismisses the SnackBar
-            },
-          ),
-        ),
-      );
+      Toast.toastMsg(
+          context, 'Please fill all the fields', GlobalVariables.accentColor3);
     }
   }
 
@@ -159,39 +125,14 @@ class SnippetService {
       if (jsonResponse['status']) {
         // Closes the loading bar
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Successfully updated the snippet',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor2,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+
+        Toast.toastMsg(context, 'Successfully updated the snippet',
+            GlobalVariables.accentColor2);
+
+        getSnippets((p0) => null);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Something went wrong',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(
+            context, 'Something went wrong', GlobalVariables.accentColor3);
       }
     } catch (error) {
       log('Error occurred during HTTP request: $error');
@@ -226,39 +167,12 @@ class SnippetService {
         Navigator.of(context).pop();
         // Closes the popup menu
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Successfully Deleted a code snippet',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor2,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+
+        Toast.toastMsg(context, 'Successfully deleted a code snippet',
+            GlobalVariables.accentColor2);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Something went wrong',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(context, 'Something went wrong. Please try again',
+            GlobalVariables.accentColor3);
       }
     } catch (error) {
       log('Error occurred duting HTTP request: $error');

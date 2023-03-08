@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   bitsdojo_window: ^0.1.5
   provider: ^6.0.5
-  flutter_svg_provider: ^1.0.3
   email_validator: ^2.1.17
   http: ^0.13.5
   shared_preferences: ^2.0.18

@@ -8,9 +8,9 @@ import 'package:app/utils/global.vars.dart';
 /*
   * Page/Component imports
  */
-import '../components/baseplate.dart';
-import '../components/editor.dart';
-import '../components/snippet.save.dart';
+import 'package:app/components/baseplate.dart';
+import 'package:app/components/editor.dart';
+import 'package:app/components/snippet.save.dart';
 
 class AddSnippet extends StatefulWidget {
   const AddSnippet({super.key});

@@ -7,13 +7,18 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
-import '../utils/http.routes.dart';
+import 'package:app/utils/http.routes.dart';
 // ? https://pub.dev/packages/email_validator
 import 'package:email_validator/email_validator.dart';
 // ? https://pub.dev/packages/http
 import 'package:http/http.dart' as http;
 // ? https://pub.dev/packages/shared_preferences
 import 'package:shared_preferences/shared_preferences.dart';
+
+/*
+  * Page/Component imports
+ */
+import 'package:app/components/toasts.dart';
 
 class UserSettings {
   // Function to delete a snippet
@@ -39,44 +44,18 @@ class UserSettings {
       if (jsonResponse['status']) {
         // Closes the loading bar
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Profile successfully deleted',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor2,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+
+        Toast.toastMsg(context, 'Profile successfully deleted',
+            GlobalVariables.accentColor2);
+
         // Clear the token from storage
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('token');
         // Navigate to the login screen
         Navigator.pushReplacementNamed(context, '/signin');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Something went wrong',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(context, 'Something went wrong. Please try againg',
+            GlobalVariables.accentColor3);
       }
     } catch (error) {
       log('Error occurred duting HTTP request: $error');
@@ -111,78 +90,35 @@ class UserSettings {
           if (jsonResponse['status']) {
             // Closes the loading bar
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Successfully updated user settings',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: GlobalVariables.accentColor2,
-                action: SnackBarAction(
-                  label: 'x',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // code to be executed when the user dismisses the SnackBar
-                  },
-                ),
-              ),
-            );
+
+            Toast.toastMsg(context, 'Successfully updated user settings',
+                GlobalVariables.accentColor2);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text(
-                  'Something went wrong',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: GlobalVariables.accentColor3,
-                action: SnackBarAction(
-                  label: 'x',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // code to be executed when the user dismisses the SnackBar
-                  },
-                ),
-              ),
-            );
+            Toast.toastMsg(context, 'Something went wrong. Please try again',
+                GlobalVariables.accentColor3);
           }
         } catch (error) {
           log('Error occurred duting HTTP request: $error');
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Please enter a vdalid email',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: GlobalVariables.accentColor3,
-            action: SnackBarAction(
-              label: 'x',
-              textColor: Colors.white,
-              onPressed: () {
-                // code to be executed when the user dismisses the SnackBar
-              },
-            ),
-          ),
-        );
+        Toast.toastMsg(context, 'Please enter a valid email adress',
+            GlobalVariables.accentColor3);
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Please fill all the fields',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: GlobalVariables.accentColor3,
-          action: SnackBarAction(
-            label: 'x',
-            textColor: Colors.white,
-            onPressed: () {
-              // code to be executed when the user dismisses the SnackBar
-            },
-          ),
-        ),
-      );
+      Toast.toastMsg(
+          context, 'Please fill all the fields', GlobalVariables.accentColor3);
     }
+  }
+
+  static logout(BuildContext context) async {
+    // Clear the token from storage
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    // Navigate to the login screen
+    Navigator.pushReplacementNamed(context, '/signin');
+
+    Toast.toastMsg(
+        context, 'Successfully signed out', GlobalVariables.accentColor2);
   }
 }

@@ -11,7 +11,7 @@ import 'package:animate_gradient/animate_gradient.dart';
 /*
   * Page/component imports
  */
-import '../app_components/titlebar.dart';
+import 'package:app/app_components/titlebar.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
