@@ -31,6 +31,7 @@ class SnippetService {
 
       if (jsonResponse['success'] != null) {
         UserInfo.snippets = jsonResponse['success'];
+        print(UserInfo.snippets);
       } else {
         UserInfo.snippets = [];
       }
@@ -170,6 +171,8 @@ class SnippetService {
 
         Toast.toastMsg(context, 'Successfully deleted a code snippet',
             GlobalVariables.accentColor2);
+
+        getSnippets((p0) => null);
       } else {
         Toast.toastMsg(context, 'Something went wrong. Please try again',
             GlobalVariables.accentColor3);
