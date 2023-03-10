@@ -36,7 +36,6 @@ class _AddSnippetState extends State<AddSnippet> {
   @override
   Widget build(BuildContext context) {
     return Baseplate(
-      title: 'Add Snippet',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

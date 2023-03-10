@@ -22,7 +22,6 @@ class _SideBarState extends State<SideBar> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(minWidth: 150, maxWidth: 250),
-      // Sets the background color
       color: GlobalVariables.primaryColor,
       child: Column(
         children: [

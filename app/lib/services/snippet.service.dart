@@ -31,7 +31,6 @@ class SnippetService {
 
       if (jsonResponse['success'] != null) {
         UserInfo.snippets = jsonResponse['success'];
-        print(UserInfo.snippets);
       } else {
         UserInfo.snippets = [];
       }
@@ -153,7 +152,7 @@ class SnippetService {
 
       var regBody = {"id": id};
 
-      var response = await http.post(
+      var response = await http.delete(
         Uri.parse(HttpRoutes.deleteUserSnippets),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(regBody),

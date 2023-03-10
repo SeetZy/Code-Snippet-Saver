@@ -34,7 +34,7 @@ class UserSettings {
 
       var regBody = {"id": id};
 
-      var response = await http.post(
+      var response = await http.delete(
         Uri.parse(HttpRoutes.deleteUser),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(regBody),

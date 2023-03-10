@@ -19,6 +19,7 @@ class EditSnippet extends StatelessWidget {
       required this.descriptionController});
 
   final String title;
+  // ignore: prefer_typing_uninitialized_variables
   final snippetId;
   final TextEditingController snippetController;
   final TextEditingController descriptionController;

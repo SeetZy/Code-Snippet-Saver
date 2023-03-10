@@ -28,7 +28,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Baseplate(
-      title: 'Settings',
       child: Stack(
         children: [
           Padding(
@@ -193,26 +192,45 @@ class _SettingsState extends State<Settings> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: GlobalVariables.accentColor3,
                     ),
-                    child: const Text(
-                      "Delete profile",
-                      style: TextStyle(color: Colors.white),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.delete_rounded,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Delete Profile",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
                   ),
                 ),
 
-                // Button to logout
-                FloatingActionButton.extended(
-                  backgroundColor: GlobalVariables.accentColor3,
+                ElevatedButton(
                   onPressed: () {
                     UserSettings.logout(context);
                   },
-                  label: const Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.white),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GlobalVariables.accentColor3,
                   ),
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Logout",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
                   ),
                 ),
               ],

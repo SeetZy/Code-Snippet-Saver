@@ -16,20 +16,22 @@ class TitleBar extends StatefulWidget {
 class _TitleBarState extends State<TitleBar> {
   @override
   Widget build(BuildContext context) {
+    // Return a Container widget with a background color and a child Column widget
     return Container(
       color: GlobalVariables.primaryColor,
       child: Column(
         children: [
+          // Add the WindowTitleBarBox widget, which contains the title of the app and the window buttons
           WindowTitleBarBox(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Movable side of window title bar
+                // Make the window title bar movable using the MoveWindow widget
                 Expanded(
                   child: MoveWindow(
                     child: const Padding(
                       padding: EdgeInsets.only(left: 8.0, top: 5),
-                      // Sets the window titlebar title
+                      // Set the title of the app in the window title bar
                       child: Text(
                         "Code Snippet Saver",
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -38,7 +40,7 @@ class _TitleBarState extends State<TitleBar> {
                   ),
                 ),
 
-                // Uses the window button widget
+                // Add the WindowButtons widget to display the custom window buttons
                 const WindowButtons()
               ],
             ),
@@ -49,17 +51,20 @@ class _TitleBarState extends State<TitleBar> {
   }
 }
 
-// Widget for the custom desktop window buttons
+// Define the WindowButtons widget
 class WindowButtons extends StatelessWidget {
   const WindowButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Return a Row widget that contains the custom window buttons
     return Row(
       children: [
-        // Buttons from the bitsdojo library
+        // Add the MinimizeWindowButton widget
         MinimizeWindowButton(),
+        // Add the MaximizeWindowButton widget
         MaximizeWindowButton(),
+        // Add the CloseWindowButton widget
         CloseWindowButton(),
       ],
     );

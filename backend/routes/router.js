@@ -24,7 +24,7 @@ router.post('/signin', userDbFunc.signIn)
 // Route to update user data
 router.put('/update-user-data/:id', userDbFunc.updateUserData)
 // Route to delete a user
-router.post('/delete-user', userDbFunc.deleteUserData)
+router.delete('/delete-user', userDbFunc.deleteUserData)
 
 // Snippet Routes
 // Route to create a new code snippet
@@ -34,6 +34,6 @@ router.get('/get-user-snippets', snippetDbFunc.getUserSnippets)
 // Route to update users snippets
 router.put('/update-snippets/:id', snippetDbFunc.updateUserSnippets)
 // Route to delete users snippets
-router.post('/delete-snippets', snippetDbFunc.deleteUserSnippets)
+router.delete('/delete-snippets', snippetDbFunc.deleteUserSnippets)
 
 module.exports = router

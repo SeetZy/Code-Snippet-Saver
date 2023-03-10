@@ -20,6 +20,8 @@ class _ShowSnippetsState extends State<ShowSnippets> {
       TextEditingController();
   static final TextEditingController _descriptionController =
       TextEditingController();
+  static final TextEditingController _searchSnippetController =
+      TextEditingController();
 
   // Loading state of the snippets
   bool _isLoading = false;
@@ -49,11 +51,50 @@ class _ShowSnippetsState extends State<ShowSnippets> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: _isLoading
-          ? _buildLoadingState()
-          : UserInfo.snippets == null || UserInfo.snippets!.isEmpty
-              ? _buildEmptyState()
-              : _buildGridView(context),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                width: 300,
+                child: TextFormField(
+                  controller: _searchSnippetController,
+                  decoration: const InputDecoration(
+                    hintText: "Search snippets by file name",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GlobalVariables.accentColor2,
+                  ),
+                  child: const Text(
+                    "Search",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          _isLoading
+              ? _buildLoadingState()
+              : UserInfo.snippets == null || UserInfo.snippets!.isEmpty
+                  ? _buildEmptyState()
+                  : _buildGridView(context),
+        ],
+      ),
     );
   }
 
@@ -76,7 +117,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
   Widget _buildGridView(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 90,
-      height: MediaQuery.of(context).size.height - 118,
+      height: MediaQuery.of(context).size.height - 201,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,

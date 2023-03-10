@@ -3,13 +3,14 @@
  */
 import 'package:flutter/material.dart';
 
-// Function for the button navigation
 class SidebarButton extends StatelessWidget {
   const SidebarButton(
       {required this.icon,
       required this.title,
       required this.route,
       super.key});
+
+  // Define the required variables for the SidebarButton widget
   final IconData icon;
   final String title;
   final String route;
@@ -20,15 +21,15 @@ class SidebarButton extends StatelessWidget {
       width: 200,
       child: Row(
         children: [
-          // Button icon
+          // Add the button icon
           Icon(
             icon,
             color: Colors.white,
           ),
-          // Button name
+          // Add the button text with a TextButton widget
           TextButton(
             onPressed: () {
-              // Redirects to the selected route
+              // Navigate to the selected route when the button is clicked
               Navigator.of(context).pushNamed(route);
             },
             child: Text(

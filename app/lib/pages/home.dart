@@ -38,7 +38,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Baseplate(
-      title: 'Overview',
       child: Stack(
         children: [
           Column(
