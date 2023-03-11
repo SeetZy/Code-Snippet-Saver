@@ -32,7 +32,8 @@ class _SaveSnippetState extends State<SaveSnippet> {
     'php',
     'css',
     'html',
-    'json'
+    'json',
+    'other'
   ];
 
   static String dropdownValue = 'py';

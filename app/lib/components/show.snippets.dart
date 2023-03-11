@@ -2,6 +2,7 @@
   * Utility imports
  */
 import 'package:app/components/edit.snippet.dart';
+import 'package:app/utils/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/services/snippet.service.dart';
@@ -20,25 +21,13 @@ class _ShowSnippetsState extends State<ShowSnippets> {
       TextEditingController();
   static final TextEditingController _descriptionController =
       TextEditingController();
-  static final TextEditingController _searchSnippetController =
+  static final TextEditingController _searchController =
       TextEditingController();
 
-  String _searchText = '';
+  static String _searchText = '';
 
   // Loading state of the snippets
   bool _isLoading = false;
-
-  List<dynamic> _getFilteredSnippets() {
-    if (_searchText.isEmpty) {
-      return UserInfo.snippets ?? [];
-    } else {
-      final searchTextLower = _searchText.toLowerCase();
-      return (UserInfo.snippets ?? [])
-          .where((snippet) =>
-              snippet['fileName'].toLowerCase().contains(searchTextLower))
-          .toList();
-    }
-  }
 
   // Method to load the snippets
   void _loadSnippets() async {
@@ -79,7 +68,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
               SizedBox(
                 width: 300,
                 child: TextFormField(
-                  controller: _searchSnippetController,
+                  controller: _searchController,
                   decoration: const InputDecoration(
                     hintText: "Search by file name",
                     border: OutlineInputBorder(),
@@ -131,14 +120,13 @@ class _ShowSnippetsState extends State<ShowSnippets> {
           maxCrossAxisExtent: 200,
           childAspectRatio: 1,
         ),
-        itemCount: _getFilteredSnippets().length,
+        itemCount: UserInfo.filteredSnippets(_searchText).length,
         itemBuilder: (context, int index) {
-          final snippet = _getFilteredSnippets()[index];
+          final snippet = UserInfo.filteredSnippets(_searchText)[index];
           return InkWell(
             onTap: () {
-              _snippetController.text = UserInfo.snippets![index]['snippet'];
-              _descriptionController.text =
-                  UserInfo.snippets![index]['description'];
+              _snippetController.text = snippet['snippet'];
+              _descriptionController.text = snippet['description'];
 
               showDialog(
                 context: context,
@@ -166,7 +154,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.file_open, size: 50),
+                  ProgrammingIcons.icons(snippet['fileType']),
                   Text(
                     '${snippet['fileName']}',
                     style: const TextStyle(
