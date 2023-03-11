@@ -23,8 +23,22 @@ class _ShowSnippetsState extends State<ShowSnippets> {
   static final TextEditingController _searchSnippetController =
       TextEditingController();
 
+  String _searchText = '';
+
   // Loading state of the snippets
   bool _isLoading = false;
+
+  List<dynamic> _getFilteredSnippets() {
+    if (_searchText.isEmpty) {
+      return UserInfo.snippets ?? [];
+    } else {
+      final searchTextLower = _searchText.toLowerCase();
+      return (UserInfo.snippets ?? [])
+          .where((snippet) =>
+              snippet['fileName'].toLowerCase().contains(searchTextLower))
+          .toList();
+    }
+  }
 
   // Method to load the snippets
   void _loadSnippets() async {
@@ -36,6 +50,12 @@ class _ShowSnippetsState extends State<ShowSnippets> {
       setState(() {
         _isLoading = isLoading;
       });
+    });
+  }
+
+  void _onSearchTextChanged(String searchText) {
+    setState(() {
+      _searchText = searchText;
     });
   }
 
@@ -61,26 +81,14 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                 child: TextFormField(
                   controller: _searchSnippetController,
                   decoration: const InputDecoration(
-                    hintText: "Search snippets by file name",
+                    hintText: "Search by file name",
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(
                       Icons.search,
                       color: Colors.grey,
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: GlobalVariables.accentColor2,
-                  ),
-                  child: const Text(
-                    "Search",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
+                  onChanged: _onSearchTextChanged,
                 ),
               ),
             ],
@@ -123,8 +131,9 @@ class _ShowSnippetsState extends State<ShowSnippets> {
           maxCrossAxisExtent: 200,
           childAspectRatio: 1,
         ),
-        itemCount: UserInfo.snippets!.length,
+        itemCount: _getFilteredSnippets().length,
         itemBuilder: (context, int index) {
+          final snippet = _getFilteredSnippets()[index];
           return InkWell(
             onTap: () {
               _snippetController.text = UserInfo.snippets![index]['snippet'];
@@ -141,8 +150,8 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         EditSnippet(
-                            title: '${UserInfo.snippets![index]['fileName']}',
-                            snippetId: UserInfo.snippets![index]['_id'],
+                            title: '${snippet['fileName']}',
+                            snippetId: snippet['_id'],
                             snippetController: _snippetController,
                             descriptionController: _descriptionController),
                       ],
@@ -159,7 +168,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                 children: [
                   const Icon(Icons.file_open, size: 50),
                   Text(
-                    '${UserInfo.snippets![index]['fileName']}',
+                    '${snippet['fileName']}',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
