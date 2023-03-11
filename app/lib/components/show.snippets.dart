@@ -1,6 +1,8 @@
 /*
   * Utility imports
  */
+import 'dart:async';
+
 import 'package:app/components/edit.snippet.dart';
 import 'package:app/utils/icons.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +55,13 @@ class _ShowSnippetsState extends State<ShowSnippets> {
   void initState() {
     super.initState();
     _loadSnippets();
+
+    // Set up a timer to update the search text every second
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _searchText = _searchController.text;
+      });
+    });
   }
 
   // Build method
