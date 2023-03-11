@@ -24,9 +24,13 @@ class _SaveSnippetState extends State<SaveSnippet> {
 
   static final List<String> progLang = [
     'py',
-    'dart',
+    'rs',
+    'java',
+    'go',
+    'ruby',
     'js',
     'ts',
+    'c',
     'cpp',
     'cs',
     'php',
