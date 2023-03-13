@@ -26,6 +26,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
   static final TextEditingController _searchController =
       TextEditingController();
 
+  // Sets the default value for the searched text
   static String _searchText = '';
 
   // Loading state of the snippets
@@ -44,6 +45,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
     });
   }
 
+  // Method when the searched text is changed
   void _onSearchTextChanged(String searchText) {
     setState(() {
       _searchText = searchText;
@@ -95,9 +97,12 @@ class _ShowSnippetsState extends State<ShowSnippets> {
             height: 30,
           ),
           _isLoading
+              // When the data is being loaded from the database
               ? _buildLoadingState()
               : UserInfo.snippets == null || UserInfo.snippets!.isEmpty
+                  // If there is no data
                   ? _buildEmptyState()
+                  // If there is data
                   : _buildGridView(context),
         ],
       ),
@@ -134,6 +139,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
           final snippet = UserInfo.filteredSnippets(_searchText)[index];
           return InkWell(
             onTap: () {
+              // Sets the controller text
               _snippetController.text = snippet['snippet'];
               _descriptionController.text = snippet['description'];
 
@@ -146,6 +152,7 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Pop up to edit the snippet data
                         EditSnippet(
                             title: '${snippet['fileName']}',
                             snippetId: snippet['_id'],
@@ -157,6 +164,8 @@ class _ShowSnippetsState extends State<ShowSnippets> {
                 },
               );
             },
+
+            // Individual card with some info about the snippet
             child: Card(
               color: GlobalVariables.secondaryColor2,
               borderOnForeground: false,

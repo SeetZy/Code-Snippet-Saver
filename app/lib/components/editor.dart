@@ -36,7 +36,7 @@ class CodeEditor extends StatelessWidget {
         maxLines: null,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          hintText: defaultCode.join('\n'), // add this line
+          hintText: defaultCode.join('\n'),
           contentPadding: const EdgeInsets.all(16.0),
         ),
         style: const TextStyle(fontSize: 16.0),

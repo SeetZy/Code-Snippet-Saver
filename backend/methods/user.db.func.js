@@ -12,7 +12,10 @@ class UserService {
   // Method for registering a new user
   static async signUpUser(username, email, password) {
     try {
+      // Creates a new user
       const createUser = new UserModel({ username, email, password })
+
+      // Saves the user to the database
       return await createUser.save()
     } catch (error) {
       throw new Error(`Failed to register user: ${error.message}`)
@@ -33,20 +36,27 @@ class UserService {
     return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpire })
   }
 
+  // Method for updating a users username and email
   static async updateData(id, username, email) {
+    // Finds the designated user and updates it
     const updatedUserData = await UserModel.findByIdAndUpdate(
       { _id: id },
       { username, email },
       { new: true }
     )
+
     return updatedUserData
   }
 
+  // Method for deleting all user data
   static async deleteUser(id) {
+    // Finds the user profile data and deletes it
     const deletedUserData = await UserModel.findOneAndDelete({ _id: id })
+    // Finds every code snippet that the user "owns" and deletes it
     const deletedUserSnippets = await SnippetModel.deleteMany({
       userId: id,
     })
+
     return deletedUserSnippets, deletedUserData
   }
 }
@@ -96,7 +106,7 @@ module.exports = userDbFunc = {
         const isMatch = await user.comparePassword(password)
 
         if (isMatch) {
-          // If the provided passwords do not match
+          // If the provided passwords match
           const tokenData = {
             _id: user._id,
             username: user.username,
@@ -127,6 +137,7 @@ module.exports = userDbFunc = {
     }
   },
 
+  // Exporting the updateUserData function for updating user data
   updateUserData: async (req, res, next) => {
     try {
       const { id } = req.params
@@ -140,6 +151,7 @@ module.exports = userDbFunc = {
     }
   },
 
+  // Exporting the deleteUserData function for deleting all user data
   deleteUserData: async (req, res, next) => {
     try {
       const { id } = req.body

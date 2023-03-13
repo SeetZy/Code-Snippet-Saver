@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
  */
 import 'package:app/components/toasts.dart';
 
+// A class for managing user settings
 class UserSettings {
   // Function to delete a snippet
   static void deleteUser(BuildContext context, id) async {
@@ -34,6 +35,7 @@ class UserSettings {
 
       var regBody = {"id": id};
 
+      // HTTP DELETE request
       var response = await http.delete(
         Uri.parse(HttpRoutes.deleteUser),
         headers: {"Content-Type": "application/json"},
@@ -51,8 +53,8 @@ class UserSettings {
         // Clear the token from storage
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('token');
-        // Navigate to the login screen
-        Navigator.pushReplacementNamed(context, '/signin');
+        // Navigate to the registration screen
+        Navigator.pushReplacementNamed(context, '/signup');
       } else {
         Toast.toastMsg(context, 'Something went wrong. Please try againg',
             GlobalVariables.accentColor3);
@@ -79,6 +81,7 @@ class UserSettings {
 
           var regBody = jsonEncode({"username": username, "email": email});
 
+          // HTTP PUT request
           var response = await http.put(
             Uri.parse('${HttpRoutes.updateUserData}/$id'),
             headers: {"Content-Type": "application/json"},
@@ -110,6 +113,7 @@ class UserSettings {
     }
   }
 
+  // Function to logout the user
   static logout(BuildContext context) async {
     // Clear the token from storage
     SharedPreferences prefs = await SharedPreferences.getInstance();

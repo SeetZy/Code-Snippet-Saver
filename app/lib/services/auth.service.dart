@@ -21,15 +21,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/home.dart';
 import 'package:app/components/toasts.dart';
 
+// A class for managing user authentification
 class AuthService {
+  // Declares a static variable to hold shared preferences
   static late SharedPreferences prefs;
 
+  // Initialize shared preferences
   static initSharedPrefs() async {
+    // Get an instance of shared preferences
     prefs = await SharedPreferences.getInstance();
   }
 
   static signInUser(BuildContext context, email, password) async {
+    // Checks if the text fields are filled
     if (email.isNotEmpty && password.isNotEmpty) {
+      // Checks if the provided email is valid
       if (EmailValidator.validate(email) == true) {
         try {
           // Show loading bar

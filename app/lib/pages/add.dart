@@ -49,14 +49,18 @@ class _AddSnippetState extends State<AddSnippet> {
                   fontWeight: FontWeight.w600),
             ),
           ),
+
+          // The code editor
           Expanded(
             child: CodeEditor(
               snippetController: _snippetController,
             ),
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              // Gives user information about the state of code syntax highlighting
               const Text(
                 "Note: Syntax highlighting might not work for all languages (not implemented yet) & on page reload all inputted text dissapears",
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -64,14 +68,24 @@ class _AddSnippetState extends State<AddSnippet> {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
+                  // Button to open a pop up menu to save the snippet
                   child: ElevatedButton(
                     onPressed: () {
                       // Pop up screen to add new patients
-                      showModalBottomSheet(
+                      showDialog(
                         context: context,
-                        builder: (context) {
-                          return SaveSnippet(
-                            snippetController: _snippetController,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: GlobalVariables.secondaryColor,
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SaveSnippet(
+                                  snippetController: _snippetController,
+                                ),
+                              ],
+                            ),
                           );
                         },
                       );

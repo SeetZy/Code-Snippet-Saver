@@ -7,6 +7,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class ProgrammingIcons {
   static Widget icons(language) {
+    // Switch statement to map file extension to appropriate icon
     switch (language) {
       case "py":
         return const Icon(

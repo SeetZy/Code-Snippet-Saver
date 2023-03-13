@@ -19,16 +19,23 @@ import 'package:http/http.dart' as http;
  */
 import 'package:app/components/toasts.dart';
 
+// A class for managing user registration
 class RegService {
+  // A regular expression to match uppercase letters
   static RegExp upperCase = RegExp(r'[A-Z]');
+  // A regular expression to match digits
   static RegExp digit = RegExp(r'[0-9]');
+  // A regular expression to match special characters
   static RegExp specialChar =
       RegExp(r'[!@#\$%\^&\*\(\)_\+{}\|:<>\?\-=\[\]\\;\,./]');
 
   static Future<void> signUpUser(
       BuildContext context, username, email, password, confirmPassword) async {
+    // Checks if passwords contain an uppercase letter
     bool hasUpperCase = upperCase.hasMatch(password);
+    // Checks if passwords contain a digit
     bool hasDigit = digit.hasMatch(password);
+    // Checks if passwords contain a special character
     bool hasSpecialChar = specialChar.hasMatch(password);
 
     // Checks if the text fields are filled
@@ -40,7 +47,7 @@ class RegService {
       if (EmailValidator.validate(email) == true) {
         // Checks if the provided passwords are the same
         if (password == confirmPassword) {
-          // Checks if the provided passwords contain atleast 1 capital letter, special character, number
+          // Checks if the provided passwords contain atleast 1 capital letter, special character and digit
           if (hasUpperCase &&
               hasDigit &&
               hasSpecialChar &&
@@ -60,6 +67,7 @@ class RegService {
                 "password": password,
               };
 
+              // HTTP POST request
               var response = await http.post(
                 Uri.parse(HttpRoutes.signUpUrl),
                 headers: {"Content-Type": "application/json"},
@@ -95,7 +103,7 @@ class RegService {
                 GlobalVariables.accentColor3);
           }
         } else {
-          Toast.toastMsg(context, 'The password do not match',
+          Toast.toastMsg(context, 'The provided passwords do not match',
               GlobalVariables.accentColor3);
         }
       } else {

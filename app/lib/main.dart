@@ -52,13 +52,14 @@ class App extends StatelessWidget {
       // Checks if there is a valid auth token saved since the last login
       home: Scaffold(
         body: (token == null)
+            // If there isn't a authentification token
             ? const SignIn()
             : (JwtDecoder.isExpired(token) == false)
-                // if there is then the user is sent to the home page
+                // If there is then the user is sent to the home page
                 ? Home(
                     token: token,
                   )
-                // else to the signin page
+                // Else to the signin page
                 : const SignIn(),
       ),
     );

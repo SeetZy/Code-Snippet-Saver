@@ -18,10 +18,10 @@ class _SaveSnippetState extends State<SaveSnippet> {
   // Controllers
   static final TextEditingController _fileNameController =
       TextEditingController();
-  // Controllers
   static final TextEditingController _descriptionController =
       TextEditingController();
 
+  // Defines the list of available programming languages in the dropdown menu
   static final List<String> progLang = [
     'py',
     'rs',
@@ -40,6 +40,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
     'other'
   ];
 
+  // Sets the default dropdown menu value
   static String dropdownValue = 'py';
 
   // Clears the input field on reload
@@ -138,8 +139,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
                             maxLines: null,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText:
-                                  'Code snippet description', // add this line
+                              hintText: 'Code snippet description',
                               contentPadding: EdgeInsets.all(16.0),
                             ),
                             style: const TextStyle(fontSize: 16.0),

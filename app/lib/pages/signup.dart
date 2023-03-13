@@ -28,12 +28,14 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  // Defines the values if the text needs to be obscured
   bool _obscureText = true;
   bool _obscureText2 = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Sets the animated background gradient
       body: AnimateGradient(
         primaryBegin: Alignment.topLeft,
         primaryEnd: Alignment.bottomLeft,
@@ -51,6 +53,7 @@ class _SignUpState extends State<SignUp> {
         ],
         child: Column(
           children: [
+            // Loads the custom titlebar widget
             const TitleBar(),
             Expanded(
               child: Center(
@@ -82,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
 
-                        // Email text input field
+                        // Username text input field
                         TextField(
                           controller: _usernameController,
                           decoration: const InputDecoration(

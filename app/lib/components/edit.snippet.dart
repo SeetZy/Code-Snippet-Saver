@@ -66,6 +66,8 @@ class EditSnippet extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
+
+                // Description text field
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: MediaQuery.of(context).size.height - 233,

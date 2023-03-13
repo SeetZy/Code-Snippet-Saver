@@ -25,6 +25,7 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  // Defines the value if the text needs to be obscured
   bool _obscureText = true;
 
   @override
@@ -36,6 +37,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Sets the animated background gradient
       body: AnimateGradient(
         primaryBegin: Alignment.topLeft,
         primaryEnd: Alignment.bottomLeft,
@@ -53,6 +55,7 @@ class _SignInState extends State<SignIn> {
         ],
         child: Column(
           children: [
+            // Loads the custom titlebar widget
             const TitleBar(),
             Expanded(
               child: Center(

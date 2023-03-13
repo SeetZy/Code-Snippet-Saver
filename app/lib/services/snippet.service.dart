@@ -17,11 +17,14 @@ import 'package:http/http.dart' as http;
  */
 import 'package:app/components/toasts.dart';
 
+// A class for managing code snippets
 class SnippetService {
+  // Function to get user snippets
   static Future<void> getSnippets(Function(bool) setLoading) async {
     try {
       setLoading(true);
 
+      // HTTP GET request
       final response = await http.get(
         Uri.parse('${HttpRoutes.getUserSnippets}?userId=${UserInfo.userId}'),
         headers: {"Content-Type": "application/json"},
@@ -66,6 +69,7 @@ class SnippetService {
           "description": description
         };
 
+        // HTTP POST request
         var response = await http.post(
           Uri.parse(HttpRoutes.addSnippetUrl),
           headers: {"Content-Type": "application/json"},
@@ -80,6 +84,7 @@ class SnippetService {
           // Closes the pop up menu
           Navigator.of(context).pop();
 
+          // CLears the snippet controller
           snippetController.clear();
 
           Toast.toastMsg(context, 'Successfully added a code snippet',
@@ -114,6 +119,7 @@ class SnippetService {
         "description": description,
       });
 
+      // HTTP PUT request
       var response = await http.put(
         Uri.parse('${HttpRoutes.updateUserSnippets}/$id'),
         headers: {"Content-Type": "application/json"},
@@ -152,6 +158,7 @@ class SnippetService {
 
       var regBody = {"id": id};
 
+      // HTTP DELETE request
       var response = await http.delete(
         Uri.parse(HttpRoutes.deleteUserSnippets),
         headers: {"Content-Type": "application/json"},

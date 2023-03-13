@@ -210,6 +210,7 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
 
+                // Button to logout the user
                 ElevatedButton(
                   onPressed: () {
                     UserSettings.logout(context);
