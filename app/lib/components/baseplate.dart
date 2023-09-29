@@ -2,7 +2,6 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
-import 'package:app/utils/global.vars.dart';
 
 /*
   * Page/component imports
@@ -33,8 +32,8 @@ class Baseplate extends StatelessWidget {
               // Add an expanded container to the right side of the screen to contain the child widget.
               Expanded(
                 child: Container(
-                  height: MediaQuery.of(context).size.height - 31,
-                  color: GlobalVariables.secondaryColor,
+                  height: MediaQuery.of(context).size.height - 32,
+                  color: Colors.white,
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
                     child: child,

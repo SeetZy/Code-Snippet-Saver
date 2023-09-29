@@ -83,6 +83,7 @@ class _SignInState extends State<SignIn> {
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -92,6 +93,7 @@ class _SignInState extends State<SignIn> {
                           controller: _emailController,
                           decoration: const InputDecoration(
                             hintText: "Email",
+                            hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -105,6 +107,7 @@ class _SignInState extends State<SignIn> {
                           controller: _passwordController,
                           decoration: InputDecoration(
                             hintText: "Password",
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(

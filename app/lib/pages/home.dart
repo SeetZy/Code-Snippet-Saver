@@ -3,7 +3,6 @@
  */
 import 'package:flutter/material.dart';
 import 'package:app/services/user.info.dart';
-import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/jwt_decoder
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -42,17 +41,18 @@ class _HomeState extends State<Home> {
     return Baseplate(
       child: Stack(
         children: [
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
+            children: [
               Padding(
-                padding: EdgeInsets.only(left: 10, right: 20, bottom: 10),
+                padding: EdgeInsets.only(left: 20, top: 10),
                 child: Text(
                   'Snippet Overview',
                   style: TextStyle(
-                      fontSize: 25,
-                      color: GlobalVariables.accentColor4,
-                      fontWeight: FontWeight.w600),
+                    fontSize: 28,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
@@ -71,7 +71,10 @@ class _HomeState extends State<Home> {
               },
               label: const Text(
                 "Add\nSnippet",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               icon: const Icon(
                 Icons.add,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:app/utils/global.vars.dart';
 import 'package:app/services/snippet.service.dart';
+import 'package:app/utils/icons.dart';
 
 class SaveSnippet extends StatefulWidget {
   const SaveSnippet({super.key, required this.snippetController});
@@ -20,25 +21,6 @@ class _SaveSnippetState extends State<SaveSnippet> {
       TextEditingController();
   static final TextEditingController _descriptionController =
       TextEditingController();
-
-  // Defines the list of available programming languages in the dropdown menu
-  static final List<String> progLang = [
-    'py',
-    'rs',
-    'java',
-    'go',
-    'ruby',
-    'js',
-    'ts',
-    'c',
-    'cpp',
-    'cs',
-    'php',
-    'css',
-    'html',
-    'json',
-    'other'
-  ];
 
   // Sets the default dropdown menu value
   static String dropdownValue = 'py';
@@ -57,8 +39,8 @@ class _SaveSnippetState extends State<SaveSnippet> {
   Widget build(BuildContext context) {
     // Pop-up widget content here
     return Container(
-      color: GlobalVariables.secondaryColor,
-      height: 300,
+      color: GlobalVariables.primaryColor,
+      height: 220,
       child: Center(
         child: SizedBox(
           width: 800,
@@ -67,11 +49,11 @@ class _SaveSnippetState extends State<SaveSnippet> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(bottom: 20),
                 child: Text(
                   "Save a snippet",
                   style: TextStyle(
-                      color: GlobalVariables.accentColor4,
+                      color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.w600),
                 ),
@@ -88,7 +70,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
                           // File name
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 20, right: 20, bottom: 20),
+                                left: 20, right: 55, bottom: 20),
                             // File name text input field
                             child: SizedBox(
                               width: 300,
@@ -110,7 +92,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
                               value: dropdownValue,
                               icon: const Icon(Icons.arrow_downward),
                               iconSize: 24,
-                              items: progLang
+                              items: ProgrammingIcons.progLang
                                   .map<DropdownMenuItem<String>>(
                                     (String value) => DropdownMenuItem<String>(
                                       value: value,
@@ -133,7 +115,7 @@ class _SaveSnippetState extends State<SaveSnippet> {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: SizedBox(
                           width: 400,
-                          height: 100,
+                          height: 110,
                           child: TextField(
                             expands: true,
                             maxLines: null,
@@ -180,10 +162,10 @@ class _SaveSnippetState extends State<SaveSnippet> {
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: GlobalVariables.accentColor2),
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 120,
                             child: Row(
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.save,
                                   color: Colors.white,
@@ -210,10 +192,10 @@ class _SaveSnippetState extends State<SaveSnippet> {
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: GlobalVariables.accentColor3),
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 80,
                             child: Row(
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.close,
                                   color: Colors.white,

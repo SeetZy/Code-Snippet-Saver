@@ -81,6 +81,7 @@ class _SignUpState extends State<SignUp> {
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -90,6 +91,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _usernameController,
                           decoration: const InputDecoration(
                             hintText: "Username",
+                            hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -102,6 +104,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _emailController,
                           decoration: const InputDecoration(
                             hintText: "Email",
+                            hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -115,6 +118,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _passwordController,
                           decoration: InputDecoration(
                             hintText: "Password",
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(
@@ -141,6 +145,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _confirmPasswordController,
                           decoration: InputDecoration(
                             hintText: "Confirm Password",
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: Icon(

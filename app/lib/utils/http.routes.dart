@@ -1,19 +1,15 @@
 class HttpRoutes {
+  static const baseUrl = "http://localhost:5000/";
+
   // HTTP routes for user functions
-  static const signUpUrl = 'https://snippet-saver-backend.herokuapp.com/signup';
-  static const signInUrl = 'https://snippet-saver-backend.herokuapp.com/signin';
-  static const updateUserData =
-      'https://snippet-saver-backend.herokuapp.com/update-user-data';
-  static const deleteUser =
-      'https://snippet-saver-backend.herokuapp.com/delete-user';
+  static const signUpUrl = '${baseUrl}signup';
+  static const signInUrl = '${baseUrl}signin';
+  static const updateUserData = '${baseUrl}update-user-data';
+  static const deleteUser = '${baseUrl}delete-user';
 
   // HTTP routes for snippet functions
-  static const addSnippetUrl =
-      'https://snippet-saver-backend.herokuapp.com/create-snippet';
-  static const getUserSnippets =
-      'https://snippet-saver-backend.herokuapp.com/get-user-snippets';
-  static const updateUserSnippets =
-      'https://snippet-saver-backend.herokuapp.com/update-snippets';
-  static const deleteUserSnippets =
-      'https://snippet-saver-backend.herokuapp.com/delete-snippets';
+  static const addSnippetUrl = '${baseUrl}create-snippet';
+  static const getUserSnippets = '${baseUrl}get-user-snippets';
+  static const updateUserSnippets = '${baseUrl}update-snippets';
+  static const deleteUserSnippets = '${baseUrl}delete-snippets';
 }

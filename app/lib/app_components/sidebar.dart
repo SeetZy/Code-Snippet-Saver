@@ -8,7 +8,7 @@ import 'package:app/utils/app.routes.dart';
 /*
   * Page/component imports
  */
-import 'package:app/components/nav.btn.dart';
+import 'package:app/app_components/sidebar.btn.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
@@ -21,41 +21,47 @@ class _SideBarState extends State<SideBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 150, maxWidth: 250),
+      width: 70,
       color: GlobalVariables.primaryColor,
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 40),
-            height: MediaQuery.of(context).size.height - 74,
-            child: Column(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 32,
+        child: const Stack(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 // Home button
                 SidebarButton(
-                  title: "Overview",
+                  title: "Home",
+                  tooltip: "Home",
                   icon: Icons.folder,
                   route: AppRoutes.homeRoute,
                 ),
                 // Add new snippet button
                 SidebarButton(
-                  title: "Add",
+                  title: "Add Snippets",
+                  tooltip: "Add Snippets",
                   icon: Icons.add,
                   route: AppRoutes.addRoute,
                 ),
               ],
             ),
-          ),
-          // Settings button
-          const Padding(
-            padding: EdgeInsets.only(bottom: 15, left: 15),
-            child: SidebarButton(
-              title: "Settings",
-              icon: Icons.settings,
-              route: AppRoutes.settingsRoute,
+
+            // Settings button
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: SidebarButton(
+                  title: "Settings",
+                  tooltip: "Settings",
+                  icon: Icons.settings,
+                  route: AppRoutes.settingsRoute,
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

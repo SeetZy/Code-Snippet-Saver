@@ -40,19 +40,21 @@ class _AddSnippetState extends State<AddSnippet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(left: 20, top: 10),
             child: Text(
               "New Code Snippet",
               style: TextStyle(
-                  fontSize: 25,
-                  color: GlobalVariables.accentColor4,
-                  fontWeight: FontWeight.w600),
+                fontSize: 28,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
 
           // The code editor
           Expanded(
             child: CodeEditor(
+              editorColor: Colors.black,
               snippetController: _snippetController,
             ),
           ),
@@ -63,7 +65,8 @@ class _AddSnippetState extends State<AddSnippet> {
               // Gives user information about the state of code syntax highlighting
               const Text(
                 "Note: Syntax highlighting might not work for all languages (not implemented yet) & on page reload all inputted text dissapears",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Expanded(
                 child: Align(
@@ -71,12 +74,12 @@ class _AddSnippetState extends State<AddSnippet> {
                   // Button to open a pop up menu to save the snippet
                   child: ElevatedButton(
                     onPressed: () {
-                      // Pop up screen to add new patients
+                      // Pop up screen to add new code snippets
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            backgroundColor: GlobalVariables.secondaryColor,
+                            backgroundColor: GlobalVariables.primaryColor,
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,11 +94,12 @@ class _AddSnippetState extends State<AddSnippet> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: GlobalVariables.accentColor2),
-                    child: SizedBox(
+                      backgroundColor: GlobalVariables.accentColor2,
+                    ),
+                    child: const SizedBox(
                       width: 65,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(
                             Icons.save,
                             color: Colors.white,
@@ -103,9 +107,10 @@ class _AddSnippetState extends State<AddSnippet> {
                           Text(
                             ' Save',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),

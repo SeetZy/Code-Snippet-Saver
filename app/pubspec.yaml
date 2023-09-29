@@ -43,6 +43,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   animate_gradient: ^0.0.2
   material_design_icons_flutter: ^6.0.7096
+  just_the_tooltip: ^0.0.12
 
 dev_dependencies:
   flutter_test:

@@ -19,33 +19,32 @@ class _TitleBarState extends State<TitleBar> {
     // Return a Container widget with a background color and a child Column widget
     return Container(
       color: GlobalVariables.primaryColor,
-      child: Column(
-        children: [
-          // Add the WindowTitleBarBox widget, which contains the title of the app and the window buttons
-          WindowTitleBarBox(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Make the window title bar movable using the MoveWindow widget
-                Expanded(
-                  child: MoveWindow(
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 8.0, top: 5),
-                      // Set the title of the app in the window title bar
-                      child: Text(
-                        "Code Snippet Saver",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+      // Add the WindowTitleBarBox widget, which contains the title of the app and the window buttons
+      child: WindowTitleBarBox(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Make the window title bar movable using the MoveWindow widget
+            Expanded(
+              child: MoveWindow(
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 8.0, top: 5),
+                  // Set the title of the app in the window title bar
+                  child: Text(
+                    "Code Snippet Saver",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
-
-                // Add the WindowButtons widget to display the custom window buttons
-                const WindowButtons()
-              ],
+              ),
             ),
-          ),
-        ],
+
+            // Add the WindowButtons widget to display the custom window buttons
+            const WindowButtons()
+          ],
+        ),
       ),
     );
   }

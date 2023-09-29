@@ -36,7 +36,7 @@ class EditSnippet extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 25,
-              color: GlobalVariables.accentColor4,
+              color: GlobalVariables.accentColor2,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -50,6 +50,7 @@ class EditSnippet extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.62,
                 height: MediaQuery.of(context).size.height - 170,
                 child: CodeEditor(
+                  editorColor: Colors.white,
                   snippetController: snippetController,
                 ),
               ),
@@ -68,23 +69,33 @@ class EditSnippet extends StatelessWidget {
                 ),
 
                 // Description text field
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: MediaQuery.of(context).size.height - 233,
-                  child: TextField(
-                    expands: true,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Code snippet description',
-                      contentPadding: EdgeInsets.all(16.0),
+
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1.5,
                     ),
-                    style: const TextStyle(fontSize: 16.0),
-                    controller: descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    textAlignVertical: TextAlignVertical.top,
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.height - 233,
+                    child: TextField(
+                      expands: true,
+                      maxLines: null,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Code snippet description',
+                        contentPadding: EdgeInsets.all(16.0),
+                      ),
+                      style: const TextStyle(fontSize: 16.0),
+                      controller: descriptionController,
+                      keyboardType: TextInputType.multiline,
+                      textAlignVertical: TextAlignVertical.top,
+                    ),
+                  ),
+                )
               ],
             )
           ],
@@ -110,10 +121,10 @@ class EditSnippet extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: GlobalVariables.accentColor2),
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 100,
                         child: Row(
-                          children: const [
+                          children: [
                             Icon(
                               Icons.save_as,
                               color: Colors.white,
@@ -143,10 +154,10 @@ class EditSnippet extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: GlobalVariables.accentColor3),
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 80,
                         child: Row(
-                          children: const [
+                          children: [
                             Icon(
                               Icons.delete_outline,
                               color: Colors.white,
@@ -173,10 +184,10 @@ class EditSnippet extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: GlobalVariables.accentColor3),
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 80,
                         child: Row(
-                          children: const [
+                          children: [
                             Icon(
                               Icons.close,
                               color: Colors.white,

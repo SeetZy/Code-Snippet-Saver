@@ -2,7 +2,6 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
-import 'package:app/utils/global.vars.dart';
 import 'package:app/utils/app.routes.dart';
 // ? https://pub.dev/packages/bitsdojo_window
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -46,8 +45,7 @@ class App extends StatelessWidget {
       // Defines all the routes
       routes: AppRoutes.routes,
       theme: ThemeData(
-        colorScheme:
-            const ColorScheme.dark(primary: GlobalVariables.accentColor),
+        colorScheme: const ColorScheme.dark(primary: Colors.grey),
       ),
       // Checks if there is a valid auth token saved since the last login
       home: Scaffold(

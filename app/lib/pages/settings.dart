@@ -31,7 +31,7 @@ class _SettingsState extends State<Settings> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -40,16 +40,17 @@ class _SettingsState extends State<Settings> {
                   child: Text(
                     "Settings",
                     style: TextStyle(
-                        fontSize: 25,
-                        color: GlobalVariables.accentColor4,
-                        fontWeight: FontWeight.w600),
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 90,
                   height: 271,
                   decoration: BoxDecoration(
-                    color: GlobalVariables.secondaryColor2,
+                    color: GlobalVariables.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -140,8 +141,8 @@ class _SettingsState extends State<Settings> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       GlobalVariables.accentColor2),
-                              child: Row(
-                                children: const [
+                              child: const Row(
+                                children: [
                                   Icon(
                                     Icons.save,
                                     color: Colors.white,
@@ -192,8 +193,8 @@ class _SettingsState extends State<Settings> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: GlobalVariables.accentColor3,
                     ),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Icon(
                           Icons.delete_rounded,
                           color: Colors.white,
@@ -218,8 +219,8 @@ class _SettingsState extends State<Settings> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: GlobalVariables.accentColor3,
                   ),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Icon(
                         Icons.logout,
                         color: Colors.white,

@@ -2,66 +2,57 @@
   * Utility imports
  */
 import 'package:flutter/material.dart';
+import 'package:app/utils/global.vars.dart';
 
 class CodeEditor extends StatelessWidget {
   const CodeEditor({
     Key? key,
     required this.snippetController,
+    required this.editorColor,
   }) : super(key: key);
 
+  final Color editorColor;
   final TextEditingController snippetController;
-
-  // Defines default code in hint text
-  static final List<String> defaultCode = [
-    '# Example code',
-    '',
-    'class Car:',
-    '\tdef __init__(self, make, model):',
-    '\t\tself.make = make>',
-    '\t\tself.model = model',
-    '',
-    '\tdef start(self):',
-    '\t\tprint(f"{self.make} {self.model} is starting.")',
-    '',
-    'car = Car("Toyota", "Corolla")',
-    'car.start()'
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        expands: true,
-        maxLines: null,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: defaultCode.join('\n'),
-          contentPadding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: editorColor,
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(5),
         ),
-        style: const TextStyle(fontSize: 16.0),
-        controller: snippetController,
-        keyboardType: TextInputType.multiline,
-        scrollPhysics: const BouncingScrollPhysics(),
-        textAlignVertical: TextAlignVertical.top,
-        textAlign: TextAlign.left,
-        cursorColor: Colors.blue,
-        cursorWidth: 2.0,
-        cursorHeight: 24.0,
-        cursorRadius: const Radius.circular(2.0),
-        onChanged: (text) {},
-        onSubmitted: (text) {},
-        autocorrect: false,
-        enableSuggestions: false,
-        enableInteractiveSelection: true,
-        showCursor: true,
-        toolbarOptions: const ToolbarOptions(
-          copy: true,
-          cut: true,
-          paste: true,
-          selectAll: true,
+        child: TextField(
+          expands: true,
+          maxLines: null,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: GlobalVariables.defaultCode.join('\n'),
+            hintStyle: TextStyle(color: editorColor),
+            contentPadding: const EdgeInsets.all(16.0),
+          ),
+          style: TextStyle(fontSize: 16.0, color: editorColor),
+          controller: snippetController,
+          keyboardType: TextInputType.multiline,
+          scrollPhysics: const BouncingScrollPhysics(),
+          textAlignVertical: TextAlignVertical.top,
+          textAlign: TextAlign.left,
+          cursorColor: editorColor,
+          cursorWidth: 1.5,
+          cursorHeight: 18.0,
+          cursorRadius: const Radius.circular(2.0),
+          onChanged: (text) {},
+          onSubmitted: (text) {},
+          autocorrect: false,
+          enableSuggestions: false,
+          enableInteractiveSelection: true,
+          showCursor: true,
+          selectionControls: MaterialTextSelectionControls(),
         ),
-        selectionControls: MaterialTextSelectionControls(),
       ),
     );
   }
